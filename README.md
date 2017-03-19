@@ -1,6 +1,6 @@
 # GUS REGON service #
 
-This is how I imagine client to [GUS](stat.gov.pl) REGON service as described in [documentation](http://bip.stat.gov.pl/dzialalnosc-statystyki-publicznej/rejestr-regon/interfejsyapi/jak-skorzystac-informacja-dla-podmiotow-komercyjnych/). Unfortunately it doesny't work.
+This is how I imagine client to [GUS](stat.gov.pl) REGON service as described in [documentation](http://bip.stat.gov.pl/dzialalnosc-statystyki-publicznej/rejestr-regon/interfejsyapi/jak-skorzystac-informacja-dla-podmiotow-komercyjnych/). Unfortunately it doesn't work.
 
 ## the problem ##
 The code supplied tries to login into service using demo public key. Expected result is session id, but insted it retunrs error. 
