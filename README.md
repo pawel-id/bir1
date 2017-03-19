@@ -1,14 +1,15 @@
 # GUS REGON service #
 
-This is example of accessing [GUS](stat.gov.pl) Regon service as described in [documentation](http://bip.stat.gov.pl/dzialalnosc-statystyki-publicznej/rejestr-regon/interfejsyapi/jak-skorzystac-informacja-dla-podmiotow-komercyjnych/) based on javascript/node.js package [soap](https://www.npmjs.com/package/soap)
+This is how I imagine client to [GUS](stat.gov.pl) REGON service as described in [documentation](http://bip.stat.gov.pl/dzialalnosc-statystyki-publicznej/rejestr-regon/interfejsyapi/jak-skorzystac-informacja-dla-podmiotow-komercyjnych/). Unfortunately it doesny't work.
 
 ## the problem ##
-The code supplied tries to login into service using demo public key. Expected result is session id. Unfortunately it doesn't work. 
+The code supplied tries to login into service using demo public key. Expected result is session id, but insted it retunrs error. 
 
-I think that implementation of the service is a bit not standard. But I don't know how to tweak my code to run properly. **Maybe someone could help?**
+I think that implementation of the service is a bit not standard. But I don't know how to tweak my code to run properly. Is it possible anyway?
 
-Here is example of python [working library](https://pypi.python.org/pypi/litex.regon) accessing this service. As I found in source code comments author complains that he has to implement it from scratch because no any standard library works... 
+## working examples ##
 
+If you are looking for something which seems to work:
 
-
-
+* https://pypi.python.org/pypi/litex.regon
+* https://github.com/Appsolutly/node-regon
