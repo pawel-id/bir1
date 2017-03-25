@@ -32,7 +32,7 @@ This is how I imagine client to [GUS REGON service](http://bip.stat.gov.pl/dzial
 Unfortunately it doesn't. :-(
 
 ## the problem ##
-The code supplied tries to login into service using demo public key. Expected result is session id, but insted it returns error. 
+The code supplied tries to login into service using demo public key. Expected result is session id, but instead it returns error. 
 
 I think that implementation of the GUS REGON service is a bit not standard. This is the reason why that simple approach fails. 
 
