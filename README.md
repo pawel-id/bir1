@@ -1,6 +1,6 @@
 # GUS REGON service #
 
-This is how I imagine client to [GUS REGON service](http://bip.stat.gov.pl/dzialalnosc-statystyki-publicznej/rejestr-regon/interfejsyapi/jak-skorzystac-informacja-dla-podmiotow-komercyjnych/) should work. 
+This is how I imagine client to [GUS REGON service](http://bip.stat.gov.pl/dzialalnosc-statystyki-publicznej/rejestr-regon/interfejsyapi/jak-skorzystac-informacja-dla-podmiotow-komercyjnych/) should work. As simple as that:
 
 ```javascript
   var soap = require('soap');
