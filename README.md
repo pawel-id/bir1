@@ -43,7 +43,7 @@ If you are still eager to use GUS REGON service there are three options:
 2. Use some library from people who did it already (see working examples below)
 
 ## idea ##
-But why every developer should struggle with such non standard service? The are two choices:
+But why every developer should struggle with such non standard service? There are two choices:
 
 3. ask GUS to provide some standard modern interface like REST (can you hear us GUS people? - probably not...)
 4. use option 1. or 2. and wrap it in an interface as above, add some caching and serve the community? Anybody?
