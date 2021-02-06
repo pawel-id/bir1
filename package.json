@@ -6,7 +6,7 @@
   "scripts": {
     "test": "tap --no-coverage"
   },
-  "author": "",
+  "author": "Pawel Idczak <pawel.idczak@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
