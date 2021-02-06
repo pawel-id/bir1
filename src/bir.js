@@ -55,7 +55,7 @@ class Bir {
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = parser.parse(envelope(response.body))
-    return result['s:Envelope']['s:Body'][`${action}Response`][[`${action}Result`]]
+    return result['s:Envelope']['s:Body'][`${action}Response`][`${action}Result`]['root']['dane']
   }
 
   async search(regon) {
@@ -63,7 +63,7 @@ class Bir {
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = parser.parse(envelope(response.body))
-    return result['s:Envelope']['s:Body'][`${action}Response`][[`${action}Result`]]
+    return result['s:Envelope']['s:Body'][`${action}Response`][`${action}Result`]['root']['dane']
   }
 }
 
