@@ -4,8 +4,6 @@ const bir = require('..')
 t.test('search for example company', async (t) => {
   await bir.login()
   const result = await bir.search('012100784')
-  t.match(result, {
-    nazwa: 'ORANGE POLSKA SPÓŁKA AKCYJNA',
-  })
+  t.match(result, { nazwa: 'ORANGE POLSKA SPÓŁKA AKCYJNA' })
   t.end()
 })
