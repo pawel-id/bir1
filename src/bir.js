@@ -5,7 +5,7 @@ const path = require('path')
 const got = require('got')
 const parser = require('fast-xml-parser')
 const handlebars = require('handlebars')
-const camelcase = require('camelcase')
+const { normalize, camelcase, removePrefix } = require('./normalize')
 
 const url = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
 
@@ -37,27 +37,6 @@ function extractData(object, action) {
     object['s:Envelope']['s:Body'][`${action}Response`][`${action}Result`]
   return result['root']['dane']
 }
-
-function normalizeCase(object) {
-  const newObject = {}
-  for (const param in object) {
-    newObject[camelcase(param, { pascalCase: false })] = object[param]
-  }
-  return newObject
-}
-
-function removeParamPrefix(object, prefix) {
-  const newObject = {}
-  for (const param in object) {
-    if (param.startsWith(prefix)) {
-      newObject[param.slice(prefix.length)] = object[param]
-    } else {
-      newObject[param] = object[param]
-    }
-  }
-  return newObject
-}
-
 class Bir {
   constructor() {
     this.api = got.extend({
@@ -88,7 +67,7 @@ class Bir {
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = parser.parse(envelope(response.body))
     const data = extractData(result, action)
-    return normalizeCase(removeParamPrefix(data, 'praw'))
+    return normalize(data, [removePrefix('praw'), camelcase])
   }
 
   async search(regon) {
@@ -97,7 +76,7 @@ class Bir {
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = parser.parse(envelope(response.body))
     const data = extractData(result, action)
-    return normalizeCase(data)
+    return normalize(data, [camelcase])
   }
 }
 
