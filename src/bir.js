@@ -5,10 +5,11 @@ const path = require('path')
 const got = require('got')
 const parser = require('fast-xml-parser')
 const handlebars = require('handlebars')
+const camelcase = require('camelcase')
 
 const url = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
 
-const envelope = (string) => {
+function envelope(string) {
   const match = /<\S+:Envelope.+<\/\S+:Envelope>/s.exec(string)
   assert(match && match[0], new Error('SOAP Envelope not found in response'))
   return match[0]
@@ -19,7 +20,7 @@ const envelope = (string) => {
 
 const templates = new Map()
 
-const template = async (name, params = {}) => {
+async function template(name, params = {}) {
   if (!templates.has(name)) {
     const templateSrc = await fs.promises.readFile(
       path.join(__dirname, 'templates', `${name}.xml`),
@@ -29,6 +30,32 @@ const template = async (name, params = {}) => {
   }
 
   return templates.get(name)(params)
+}
+
+function extractData(object, action) {
+  const result =
+    object['s:Envelope']['s:Body'][`${action}Response`][`${action}Result`]
+  return result['root']['dane']
+}
+
+function normalizeCase(object) {
+  const newObject = {}
+  for (const param in object) {
+    newObject[camelcase(param, { pascalCase: false })] = object[param]
+  }
+  return newObject
+}
+
+function removeParamPrefix(object, prefix) {
+  const newObject = {}
+  for (const param in object) {
+    if (param.startsWith(prefix)) {
+      newObject[param.slice(prefix.length)] = object[param]
+    } else {
+      newObject[param] = object[param]
+    }
+  }
+  return newObject
 }
 
 class Bir {
@@ -60,9 +87,8 @@ class Bir {
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = parser.parse(envelope(response.body))
-    return result['s:Envelope']['s:Body'][`${action}Response`][
-      `${action}Result`
-    ]['root']['dane']
+    const data = extractData(result, action)
+    return normalizeCase(removeParamPrefix(data, 'praw'))
   }
 
   async search(regon) {
@@ -70,9 +96,8 @@ class Bir {
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = parser.parse(envelope(response.body))
-    return result['s:Envelope']['s:Body'][`${action}Response`][
-      `${action}Result`
-    ]['root']['dane']
+    const data = extractData(result, action)
+    return normalizeCase(data)
   }
 }
 
