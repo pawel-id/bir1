@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "soap": "^0.18.0"
+    "dotenv": "^8.2.0",
+    "fast-xml-parser": "^3.18.0",
+    "got": "^11.8.1"
   }
 }
