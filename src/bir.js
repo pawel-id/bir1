@@ -40,7 +40,9 @@ class Bir {
   }
 
   async login() {
-    const body = await template('Zaloguj', { key: process.env.KEY })
+    const key = process.env.KEY
+    assert(key, new Error('no KEY provided'))
+    const body = await template('Zaloguj', { key })
     const response = await this.api({ body })
 
     const regexp = /<ZalogujResult>(\S+)<\/ZalogujResult>/
