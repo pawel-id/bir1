@@ -1,4 +1,4 @@
-# GUS REGON service #
+# GUS REGON client #
 
 Simple client to GUS [api regon](https://api.stat.gov.pl/Home/RegonApi)
 
