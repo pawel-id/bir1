@@ -1,6 +1,6 @@
 # GUS REGON client #
 
-Simple client to GUS [api regon](https://api.stat.gov.pl/Home/RegonApi)
+Simple client to GUS [api REGON](https://api.stat.gov.pl/Home/RegonApi)
 
 ## other implementations ##
 If you don't like this one try something else:
