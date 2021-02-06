@@ -4,6 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const got = require('got')
 const parser = require('fast-xml-parser')
+const handlebars = require('handlebars')
 
 const url = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
 
@@ -16,16 +17,18 @@ const envelope = (string) => {
     .replace(/&#xD;/g, '')
 }
 
+const templates = new Map()
+
 const template = async (name, params = {}) => {
-  const template = await fs.promises.readFile(
-    path.join(__dirname, 'templates', `${name}.xml`),
-    'utf8'
-  )
-  let result = template
-  for (const param in params) {
-    result = result.replace(new RegExp(`{{${param}}}`, 'g'), params[param])
+  if (!templates.has(name)) {
+    const templateSrc = await fs.promises.readFile(
+      path.join(__dirname, 'templates', `${name}.xml`),
+      'utf8'
+    )
+    templates.set(name, handlebars.compile(templateSrc))
   }
-  return result
+
+  return templates.get(name)(params)
 }
 
 class Bir {
@@ -57,7 +60,9 @@ class Bir {
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = parser.parse(envelope(response.body))
-    return result['s:Envelope']['s:Body'][`${action}Response`][`${action}Result`]['root']['dane']
+    return result['s:Envelope']['s:Body'][`${action}Response`][
+      `${action}Result`
+    ]['root']['dane']
   }
 
   async search(regon) {
@@ -65,7 +70,9 @@ class Bir {
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = parser.parse(envelope(response.body))
-    return result['s:Envelope']['s:Body'][`${action}Response`][`${action}Result`]['root']['dane']
+    return result['s:Envelope']['s:Body'][`${action}Response`][
+      `${action}Result`
+    ]['root']['dane']
   }
 }
 
