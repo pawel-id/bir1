@@ -1,6 +1,7 @@
 require('dotenv').config()
 const assert = require('assert')
 const got = require('got')
+const entities = require("entities");
 const parser = require('fast-xml-parser')
 const { template } = require('./template')
 const { normalize, camelcase, removePrefix } = require('./normalize')
@@ -10,10 +11,7 @@ const url = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
 function envelope(string) {
   const match = /<\S+:Envelope.+<\/\S+:Envelope>/s.exec(string)
   assert(match && match[0], new Error('SOAP Envelope not found in response'))
-  return match[0]
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&#xD;/g, '')
+  return entities.decodeXML(match[0])
 }
 
 function extractData(object, action) {

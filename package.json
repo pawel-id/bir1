@@ -11,6 +11,7 @@
   "dependencies": {
     "camelcase": "^6.2.0",
     "dotenv": "^8.2.0",
+    "entities": "^2.2.0",
     "fast-xml-parser": "^3.18.0",
     "got": "^11.8.1",
     "handlebars": "^4.7.6"
