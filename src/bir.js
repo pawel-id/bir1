@@ -1,10 +1,8 @@
 require('dotenv').config()
 const assert = require('assert')
-const fs = require('fs')
-const path = require('path')
 const got = require('got')
 const parser = require('fast-xml-parser')
-const handlebars = require('handlebars')
+const { template } = require('./template')
 const { normalize, camelcase, removePrefix } = require('./normalize')
 
 const url = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
@@ -16,20 +14,6 @@ function envelope(string) {
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&#xD;/g, '')
-}
-
-const templates = new Map()
-
-async function template(name, params = {}) {
-  if (!templates.has(name)) {
-    const templateSrc = await fs.promises.readFile(
-      path.join(__dirname, 'templates', `${name}.xml`),
-      'utf8'
-    )
-    templates.set(name, handlebars.compile(templateSrc))
-  }
-
-  return templates.get(name)(params)
 }
 
 function extractData(object, action) {
