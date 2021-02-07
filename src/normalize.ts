@@ -5,11 +5,11 @@ export function removePrefix(prefix: string) {
 
 export function normalize(
   object: { [index: string]: any },
-  normalizers: Function[]
+  normalizers: ((param: string) => string)[]
 ) {
   const newObject: { [index: string]: any } = {}
   for (const param in object) {
-    let newParam: string = param
+    let newParam = param
     for (const normalizer of normalizers) {
       newParam = normalizer(newParam)
     }

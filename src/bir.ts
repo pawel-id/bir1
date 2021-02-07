@@ -23,18 +23,14 @@ function extractData(object: object, action: string) {
 }
 
 export default class Bir {
-  api: Function
+  api = got.extend({
+    method: 'POST',
+    prefixUrl: url,
+    headers: {
+      'Content-Type': 'application/soap+xml',
+    },
+  })
   sid: string | undefined
-
-  constructor() {
-    this.api = got.extend({
-      method: 'POST',
-      prefixUrl: url,
-      headers: {
-        'Content-Type': 'application/soap+xml',
-      },
-    })
-  }
 
   async login() {
     const key = process.env.KEY
