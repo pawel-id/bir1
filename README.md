@@ -7,3 +7,4 @@ If you don't like this one try something else:
 
 * https://pypi.python.org/pypi/litex.regon
 * https://github.com/Appsolutly/node-regon
+* https://github.com/Gelio/bir-regon
