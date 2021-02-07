@@ -1,25 +1,31 @@
 require('dotenv').config()
-const assert = require('assert')
-const got = require('got')
-const entities = require("entities");
-const parser = require('fast-xml-parser')
-const { template } = require('./template')
-const { normalize, camelcase, removePrefix } = require('./normalize')
+import assert from 'assert'
+import got from 'got'
+import { decodeXML } from 'entities'
+import { parse as parseXML } from 'fast-xml-parser'
+import { template } from './template'
+import { normalize, removePrefix } from './normalize'
+import camelcase from 'camelcase'
 
 const url = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
 
-function envelope(string) {
+function envelope(string: string) {
   const match = /<\S+:Envelope.+<\/\S+:Envelope>/s.exec(string)
   assert(match && match[0], new Error('SOAP Envelope not found in response'))
-  return entities.decodeXML(match[0])
+  return decodeXML(match[0])
 }
 
-function extractData(object, action) {
+function extractData(object: object, action: string) {
   const result =
+    // @ts-ignore: fix it later
     object['s:Envelope']['s:Body'][`${action}Response`][`${action}Result`]
   return result['root']['dane']
 }
-class Bir {
+
+export default class Bir {
+  api: Function
+  sid: string | undefined
+
   constructor() {
     this.api = got.extend({
       method: 'POST',
@@ -43,23 +49,21 @@ class Bir {
     }
   }
 
-  async report(regon) {
+  async report(regon: string) {
     const action = 'DanePobierzPelnyRaport'
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
-    const result = parser.parse(envelope(response.body))
+    const result = parseXML(envelope(response.body))
     const data = extractData(result, action)
     return normalize(data, [removePrefix('praw'), camelcase])
   }
 
-  async search(regon) {
+  async search(regon: string) {
     const action = 'DaneSzukajPodmioty'
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
-    const result = parser.parse(envelope(response.body))
+    const result = parseXML(envelope(response.body))
     const data = extractData(result, action)
     return normalize(data, [camelcase])
   }
 }
-
-module.exports = Bir

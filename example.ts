@@ -1,5 +1,5 @@
 
-const bir = require('./index')
+const bir = require('.')
 
 ;(async () => {
   await bir.login()

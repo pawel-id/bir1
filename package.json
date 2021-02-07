@@ -2,9 +2,11 @@
   "name": "regon-client",
   "version": "1.0.0",
   "description": "GUS REGON api client",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "tap --no-coverage"
+    "test": "tap --no-coverage",
+    "build": "tsc",
+    "dev": "tsc -w"
   },
   "author": "Pawel Idczak <pawel.idczak@gmail.com>",
   "license": "ISC",
@@ -17,6 +19,7 @@
     "handlebars": "^4.7.6"
   },
   "devDependencies": {
-    "tap": "^14.11.0"
+    "tap": "^14.11.0",
+    "typescript": "^4.1.3"
   }
 }
