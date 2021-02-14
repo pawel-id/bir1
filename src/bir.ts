@@ -8,7 +8,10 @@ import { normalize, removePrefix } from './normalize'
 import camelcase from 'camelcase'
 import BirError from './bir-error'
 
-const url = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
+const url = {
+  prod: 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
+  test: 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
+}
 
 function soapResult(string: string) {
   const match = /<\S+Result>(.+)<\/\S+Result>/s.exec(string)
@@ -32,28 +35,37 @@ function validate(data: any) {
 }
 
 export default class Bir {
-  private api = got.extend({
-    method: 'POST',
-    prefixUrl: url,
-    headers: {
-      'Content-Type': 'application/soap+xml',
-    },
-  })
-  private readonly key: string
+  private key: string
   private sid?: string
+  private prod: boolean
+  private api
 
-  constructor(options: any) {
+  constructor(options: any = {}) {
     this.key = options.key
+    this.prod = options.prod
+    if (options.key === undefined && options.prod === undefined) {
+      this.key = 'abcde12345abcde12345'
+      this.prod = false
+    }
+    if (options.key !== undefined && options.prod === undefined) {
+      this.prod = true
+    }
+    this.api = got.extend({
+      method: 'POST',
+      prefixUrl: this.prod ? url.prod : url.test,
+      headers: {
+        'Content-Type': 'application/soap+xml',
+      },
+    })
   }
 
   async login() {
-    const key = process.env.KEY
-    assert(key, new Error('no KEY provided'))
-    const body = await template('Zaloguj', { key })
+    assert(this.key, new Error('no api key provided'))
+    const body = await template('Zaloguj', { key: this.key })
     const response = await this.api({ body })
 
     const sid = soapResult(response.body)
-    assert(sid, new Error('login failed'))
+    assert(sid, new Error('login failed, no session foun in response'))
     this.sid = sid
   }
 
