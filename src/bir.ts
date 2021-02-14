@@ -39,7 +39,12 @@ export default class Bir {
       'Content-Type': 'application/soap+xml',
     },
   })
+  private readonly key: string
   private sid?: string
+
+  constructor(options: any) {
+    this.key = options.key
+  }
 
   async login() {
     const key = process.env.KEY
