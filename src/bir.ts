@@ -40,16 +40,9 @@ export default class Bir {
   private prod: boolean
   private api
 
-  constructor(options: any = {}) {
+  constructor(options: any = { key: 'abcde12345abcde12345', prod: false }) {
     this.key = options.key
-    this.prod = options.prod
-    if (options.key === undefined && options.prod === undefined) {
-      this.key = 'abcde12345abcde12345'
-      this.prod = false
-    }
-    if (options.key !== undefined && options.prod === undefined) {
-      this.prod = true
-    }
+    this.prod = options.prod || true
     this.api = got.extend({
       method: 'POST',
       prefixUrl: this.prod ? url.prod : url.test,
