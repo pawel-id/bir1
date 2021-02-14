@@ -6,6 +6,7 @@ import { parse as parseXML } from 'fast-xml-parser'
 import { template } from './template'
 import { normalize, removePrefix } from './normalize'
 import camelcase from 'camelcase'
+import BirError from './bir-error'
 
 const url = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
 
@@ -19,20 +20,26 @@ function xml2json(xml: string) {
   return parseXML(decodeXML(xml))
 }
 
-function extractData(object: object) {
-  // @ts-ignore: fix it later
+function extractData(object: any) {
   return object['root']['dane']
 }
 
+function validate(data: any) {
+  if (BirError.looksLike(data)) {
+    throw BirError.fromResponse(data)
+  }
+  return data
+}
+
 export default class Bir {
-  api = got.extend({
+  private api = got.extend({
     method: 'POST',
     prefixUrl: url,
     headers: {
       'Content-Type': 'application/soap+xml',
     },
   })
-  sid: string | undefined
+  private sid?: string
 
   async login() {
     const key = process.env.KEY
@@ -51,7 +58,7 @@ export default class Bir {
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = xml2json(soapResult(response.body))
     const data = extractData(result)
-    return normalize(data, [removePrefix('praw'), camelcase])
+    return validate(normalize(data, [removePrefix('praw'), camelcase]))
   }
 
   async search(regon: string) {
@@ -60,6 +67,6 @@ export default class Bir {
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = xml2json(soapResult(response.body))
     const data = extractData(result)
-    return normalize(data, [camelcase])
+    return validate(normalize(data, [camelcase]))
   }
 }
