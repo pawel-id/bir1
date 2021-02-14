@@ -1,6 +1,7 @@
 export function removePrefix(prefix: string) {
   const prefixLength = prefix.length
-  return (param: string) => param.slice(prefixLength)
+  return (param: string) =>
+    param.startsWith(prefix) ? param.slice(prefixLength) : param
 }
 
 export function normalize(
