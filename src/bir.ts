@@ -9,17 +9,19 @@ import camelcase from 'camelcase'
 
 const url = 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc'
 
-function envelope(string: string) {
-  const match = /<\S+:Envelope.+<\/\S+:Envelope>/s.exec(string)
-  assert(match && match[0], new Error('SOAP Envelope not found in response'))
-  return decodeXML(match[0])
+function soapResult(string: string) {
+  const match = /<\S+Result>(.+)<\/\S+Result>/s.exec(string)
+  assert(match && match[1], new Error('SOAP Result not found in response'))
+  return match[1]
 }
 
-function extractData(object: object, action: string) {
-  const result =
-    // @ts-ignore: fix it later
-    object['s:Envelope']['s:Body'][`${action}Response`][`${action}Result`]
-  return result['root']['dane']
+function xml2json(xml: string) {
+  return parseXML(decodeXML(xml))
+}
+
+function extractData(object: object) {
+  // @ts-ignore: fix it later
+  return object['root']['dane']
 }
 
 export default class Bir {
@@ -38,19 +40,17 @@ export default class Bir {
     const body = await template('Zaloguj', { key })
     const response = await this.api({ body })
 
-    const regexp = /<ZalogujResult>(\S+)<\/ZalogujResult>/
-    const match = response.body.match(regexp)
-    if (match) {
-      this.sid = match[1]
-    }
+    const sid = soapResult(response.body)
+    assert(sid, new Error('login failed'))
+    this.sid = sid
   }
 
   async report(regon: string) {
     const action = 'DanePobierzPelnyRaport'
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
-    const result = parseXML(envelope(response.body))
-    const data = extractData(result, action)
+    const result = xml2json(soapResult(response.body))
+    const data = extractData(result)
     return normalize(data, [removePrefix('praw'), camelcase])
   }
 
@@ -58,8 +58,8 @@ export default class Bir {
     const action = 'DaneSzukajPodmioty'
     const body = await template(action, { regon })
     const response = await this.api({ headers: { sid: this.sid }, body })
-    const result = parseXML(envelope(response.body))
-    const data = extractData(result, action)
+    const result = xml2json(soapResult(response.body))
+    const data = extractData(result)
     return normalize(data, [camelcase])
   }
 }
