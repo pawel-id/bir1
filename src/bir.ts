@@ -52,6 +52,12 @@ export default class Bir {
     this.sid = sid
   }
 
+  async value(value: string) {
+    const body = await template('GetValue', { value })
+    const response = await this.api({ body })
+    return soapResult(response.body)
+  }
+
   async report(regon: string) {
     const action = 'DanePobierzPelnyRaport'
     const body = await template(action, { regon })
