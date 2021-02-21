@@ -1,1 +1,8 @@
+node_modules
+test
+docs
 src
+.nyc_output
+.env
+tsconfig.json
+example.js
