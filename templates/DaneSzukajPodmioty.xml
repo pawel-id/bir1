@@ -6,13 +6,8 @@
   <soap:Body>
     <ns:DaneSzukajPodmioty>
       <ns:pParametryWyszukiwania>
-        <dat:Regon>{{regon}}</dat:Regon>
-        <dat:Nip></dat:Nip>
-        <dat:Krs></dat:Krs>
-        <dat:Nipy></dat:Nipy>
-        <dat:Regony9zn></dat:Regony9zn>
-        <dat:Krsy></dat:Krsy>
-        <dat:Regony14zn></dat:Regony14zn>
+        {{#if nip}}<dat:Nip>{{nip}}</dat:Nip>{{/if}}
+        {{#if regon}}<dat:Regon>{{regon}}</dat:Regon>{{/if}}
       </ns:pParametryWyszukiwania>
     </ns:DaneSzukajPodmioty>
   </soap:Body>

@@ -40,9 +40,9 @@ export default class Bir {
   private prod: boolean
   private api
 
-  constructor(options: any = { key: 'abcde12345abcde12345', prod: false }) {
-    this.key = options.key
-    this.prod = options.prod || true
+  constructor({ key = 'abcde12345abcde12345', prod = false } = {}) {
+    this.key = key
+    this.prod = prod
     this.api = got.extend({
       method: 'POST',
       prefixUrl: this.prod ? url.prod : url.test,
@@ -56,7 +56,6 @@ export default class Bir {
     assert(this.key, new Error('no api key provided'))
     const body = await template('Zaloguj', { key: this.key })
     const response = await this.api({ body })
-
     const sid = soapResult(response.body)
     assert(sid, new Error('login failed, no session foun in response'))
     this.sid = sid
@@ -68,18 +67,18 @@ export default class Bir {
     return soapResult(response.body)
   }
 
-  async report(regon: string) {
+  async report(query: { regon: string }) {
     const action = 'DanePobierzPelnyRaport'
-    const body = await template(action, { regon })
+    const body = await template(action, query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = xml2json(soapResult(response.body))
     const data = extractData(result)
     return validate(normalize(data, [removePrefix('praw'), camelcase]))
   }
 
-  async search(regon: string) {
+  async search(query: { nip: string } | { regon: string }) {
     const action = 'DaneSzukajPodmioty'
-    const body = await template(action, { regon })
+    const body = await template(action, query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = xml2json(soapResult(response.body))
     const data = extractData(result)
