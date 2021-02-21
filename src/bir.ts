@@ -40,9 +40,9 @@ export default class Bir {
   private prod: boolean
   private api
 
-  constructor({ key = 'abcde12345abcde12345', prod = false } = {}) {
-    this.key = key
-    this.prod = prod
+  constructor(options: { key?: string } = {}) {
+    this.key = options.key || 'abcde12345abcde12345'
+    this.prod = options.key ? true : false
     this.api = got.extend({
       method: 'POST',
       prefixUrl: this.prod ? url.prod : url.test,
