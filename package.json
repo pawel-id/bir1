@@ -1,14 +1,15 @@
 {
-  "name": "regon-client",
+  "name": "bir1",
   "version": "1.0.0",
   "description": "GUS REGON api client",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "tap --no-coverage",
     "build": "tsc",
     "dev": "tsc -w"
   },
-  "author": "Pawel Idczak <pawel.idczak@gmail.com>",
+  "author": "Paweł Idczak <pawel.idczak@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "camelcase": "^6.2.0",
