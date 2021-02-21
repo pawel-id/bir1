@@ -4,7 +4,7 @@ Simple node.js client library to [Statistics
 Poland](https://en.wikipedia.org/wiki/Statistics_Poland) (GUS) information about
 companies [api REGON](https://api.stat.gov.pl/Home/RegonApi?lang=en)
 
-# install
+## install
 
 ```bash
 npm i bir1
