@@ -2,7 +2,7 @@ const Bir = require('./dist')
 
 ;(async () => {
   try {
-    const bir = new Bir({ key: process.env.KEY, prod: true })
+    const bir = new Bir({ key: process.env.KEY })
     // const bir = new Bir()
     await bir.login()
     // console.log('StanDanych: ', await bir.value('StanDanych'))
