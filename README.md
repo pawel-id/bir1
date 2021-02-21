@@ -2,7 +2,7 @@
 
 Simple node.js client library to [Statistics
 Poland](https://en.wikipedia.org/wiki/Statistics_Poland) (GUS) information about
-companies [api REGON](https://api.stat.gov.pl/Home/RegonApi)
+companies [api REGON](https://api.stat.gov.pl/Home/RegonApi?lang=en)
 
 # install
 
@@ -45,5 +45,5 @@ output:
 ```
 
 By default it connects to non production database. In order to connect to
-production to get most up to date company data provide your key as `new
-Bir({key: 'aabc123def567'})` 
+production to get most up to date company data provide your key like this `new
+Bir({ key: 'aabc123def567' })` 
