@@ -68,8 +68,7 @@ export default class Bir {
     const body = await template(action, query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = await xml2json(soapResult(response.body))
-    const data = extractData(result)
-    return validate(data)
+    return validate(extractData(result))
   }
 
   async search(query: { nip: string } | { regon: string }) {
@@ -77,7 +76,6 @@ export default class Bir {
     const body = await template(action, query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = await xml2json(soapResult(response.body))
-    const data = extractData(result)
-    return validate(data)
+    return validate(extractData(result))
   }
 }
