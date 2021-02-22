@@ -25,9 +25,9 @@ const Bir = require('bir1')
 output: 
 
 {
-  regon: 11417295,
-  nip: 5261040567,
-  statusNip: '',
+  regon: '011417295',
+  nip: '5261040567',
+  statusNip: null,
   nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA',
   wojewodztwo: 'MAZOWIECKIE',
   powiat: 'Warszawa',
@@ -35,11 +35,11 @@ output:
   miejscowosc: 'Warszawa',
   kodPocztowy: '02-674',
   ulica: 'ul. Marynarska',
-  nrNieruchomosci: 12,
-  nrLokalu: '',
+  nrNieruchomosci: '12',
+  nrLokalu: null,
   typ: 'P',
-  silosId: 6,
-  dataZakonczeniaDzialalnosci: '',
+  silosID: '6',
+  dataZakonczeniaDzialalnosci: null,
   miejscowoscPoczty: 'Warszawa'
 }
 */
@@ -47,5 +47,5 @@ output:
 ```
 
 By default it connects to non production database using public default key. In
-order to connect to production database with current company data provide the
+order to connect to production database with current company data provide your
 key like this `new Bir({key: 'example123def567' })` 
