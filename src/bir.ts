@@ -1,11 +1,8 @@
 require('dotenv').config()
 import assert from 'assert'
 import got from 'got'
-import { decodeXML } from 'entities'
-import { parse as parseXML } from 'fast-xml-parser'
 import { template } from './template'
-import { normalize, removePrefix } from './normalize'
-import camelcase from 'camelcase'
+import { xml2json } from './xml-parser'
 import BirError from './bir-error'
 
 const url = {
@@ -17,10 +14,6 @@ function soapResult(string: string) {
   const match = /<\S+Result>(.+)<\/\S+Result>/s.exec(string)
   assert(match && match[1], new Error('SOAP Result empty or not found in response'))
   return match[1]
-}
-
-function xml2json(xml: string) {
-  return parseXML(decodeXML(xml))
 }
 
 function extractData(object: any) {
@@ -71,17 +64,17 @@ export default class Bir {
     const action = 'DanePobierzPelnyRaport'
     const body = await template(action, query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    const result = xml2json(soapResult(response.body))
+    const result = await xml2json(soapResult(response.body))
     const data = extractData(result)
-    return validate(normalize(data, [removePrefix('praw'), camelcase]))
+    return validate(data)
   }
 
   async search(query: { nip: string } | { regon: string }) {
     const action = 'DaneSzukajPodmioty'
     const body = await template(action, query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    const result = xml2json(soapResult(response.body))
+    const result = await xml2json(soapResult(response.body))
     const data = extractData(result)
-    return validate(normalize(data, [camelcase]))
+    return validate(data)
   }
 }
