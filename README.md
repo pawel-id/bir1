@@ -48,4 +48,4 @@ output:
 
 By default it connects to non production database using public default key. In
 order to connect to production database with current company data provide your
-key like this `new Bir({key: 'example123def567' })` 
+key like this `new Bir({ key: 'example123def567' })` 
