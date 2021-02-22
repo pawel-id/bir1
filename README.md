@@ -15,9 +15,11 @@ npm i bir1
 ```javascript
 const Bir = require('bir1')
 
-const bir = new Bir()
-await bir.login()
-console.log(await bir.search({ nip: '5261040567' }))
+(async () => {
+  const bir = new Bir()
+  await bir.login()
+  console.log(await bir.search({ nip: '5261040567' }))
+})()
 
 /*
 output: 
@@ -44,6 +46,6 @@ output:
 
 ```
 
-By default it connects to non production database. In order to connect to
-production to get most up to date company data provide your key like this `new
-Bir({ key: 'aabc123def567' })` 
+By default it connects to non production database using public default key. In
+order to connect to production database with current company data provide the
+key like this `new Bir({key: 'example123def567' })` 
