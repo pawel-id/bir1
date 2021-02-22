@@ -1,6 +1,6 @@
 import { decodeXML } from 'entities'
 import { Parser } from 'xml2js'
-import { firstCharLowerCase} from 'xml2js/lib/processors'
+import { firstCharLowerCase } from 'xml2js/lib/processors'
 import { removePrefix } from './normalize'
 
 const options = {
