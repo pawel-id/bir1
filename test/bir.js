@@ -27,3 +27,11 @@ t.test('search fail for non existing company', async (t) => {
   })
   t.end()
 })
+
+t.test('report existing company', async (t) => {
+  const bir = new Bir()
+  await bir.login()
+  const result = await bir.report({ regon: '011417295', report: 'BIR11OsPrawna' })
+  t.match(result, { nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA' })
+  t.end()
+})
