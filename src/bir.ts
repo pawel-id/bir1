@@ -64,16 +64,14 @@ export default class Bir {
   }
 
   async report(query: { regon: string; report: string }) {
-    const action = 'DanePobierzPelnyRaport'
-    const body = await template(action, query)
+    const body = await template('DanePobierzPelnyRaport', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = await xml2json(soapResult(response.body))
     return validate(extractData(result))
   }
 
   async search(query: { nip: string } | { regon: string }) {
-    const action = 'DaneSzukajPodmioty'
-    const body = await template(action, query)
+    const body = await template('DaneSzukajPodmioty', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = await xml2json(soapResult(response.body))
     return validate(extractData(result))
