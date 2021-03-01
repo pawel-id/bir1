@@ -63,7 +63,7 @@ export default class Bir {
     return soapResult(response.body)
   }
 
-  async report(query: { regon: string }) {
+  async report(query: { regon: string; report: string }) {
     const action = 'DanePobierzPelnyRaport'
     const body = await template(action, query)
     const response = await this.api({ headers: { sid: this.sid }, body })

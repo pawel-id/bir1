@@ -6,7 +6,7 @@
   <soap:Body>
     <ns:DanePobierzPelnyRaport>
       <ns:pRegon>{{regon}}</ns:pRegon>
-      <ns:pNazwaRaportu>BIR11OsPrawna</ns:pNazwaRaportu>
+      <ns:pNazwaRaportu>{{report}}</ns:pNazwaRaportu>
     </ns:DanePobierzPelnyRaport>
   </soap:Body>
 </soap:Envelope>
