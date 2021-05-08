@@ -1,9 +1,9 @@
 require('dotenv').config()
 import assert from 'assert'
 import got from 'got'
-import { template } from './template'
-import { xml2json } from './xml-parser'
-import BirError from './bir-error'
+import { template } from './template.js'
+import { xml2json } from './xml-parser.js'
+import BirError from './bir-error.js'
 
 const url = {
   prod: 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',

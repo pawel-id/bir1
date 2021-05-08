@@ -13,13 +13,11 @@ npm i bir1
 ## usage
 
 ```javascript
-const Bir = require('bir1')
+import Bir from 'bir1'
 
-(async () => {
-  const bir = new Bir()
-  await bir.login()
-  console.log(await bir.search({ nip: '5261040567' }))
-})()
+const bir = new Bir()
+await bir.login()
+console.log(await bir.search({ nip: '5261040567' }))
 
 /*
 output: 

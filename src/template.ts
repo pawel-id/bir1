@@ -2,6 +2,10 @@ import fs from 'fs'
 import path from 'path'
 import handlebars from 'handlebars'
 
+// import { fileURLToPath } from 'url'
+// const __filename = fileURLToPath(import.meta.url)
+// const __dirname = path.dirname(__filename)
+
 const templates = new Map()
 
 export async function template(name: string, params = {}) {
