@@ -8,16 +8,16 @@
     "nip",
     "gus"
   ],
+  "repository": "pawel-id/bir1",
+  "license": "MIT",
+  "author": "Paweł Idczak <pawel.idczak@gmail.com>",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "repository": "pawel-id/bir1",
   "scripts": {
     "test": "tap --no-coverage",
     "build": "tsc",
     "dev": "tsc -w"
   },
-  "author": "Paweł Idczak <pawel.idczak@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "dotenv": "^8.2.0",
     "entities": "^2.2.0",
