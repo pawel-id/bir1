@@ -1,4 +1,3 @@
-require('dotenv').config()
 import assert from 'assert'
 import got from 'got'
 import { template } from './template.js'
