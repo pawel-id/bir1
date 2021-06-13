@@ -1,16 +1,17 @@
-# BIR1 - GUS REGON client #
+# BIR1 - GUS REGON client
 
-Simple node.js client library to [Statistics
-Poland](https://en.wikipedia.org/wiki/Statistics_Poland) (GUS) information about
-companies [api REGON](https://api.stat.gov.pl/Home/RegonApi?lang=en)
+Simple node.js client library to
+[Statistics Poland](https://en.wikipedia.org/wiki/Statistics_Poland) (GUS)
+information about companies
+[api REGON](https://api.stat.gov.pl/Home/RegonApi?lang=en)
 
-## install
+## Install
 
 ```bash
 npm i bir1
 ```
 
-## usage
+## Usage
 
 ```javascript
 import Bir from 'bir1'
@@ -41,9 +42,83 @@ output:
   miejscowoscPoczty: 'Warszawa'
 }
 */
-
 ```
 
-By default it connects to non production database using public default key. In
-order to connect to production database with current company data provide your
-key like this `new Bir({ key: 'example123def567' })` 
+## API
+
+### constructor
+
+• **new Bir**(`options?`)
+
+#### Parameters
+
+| Name           | Type     | Notes              |
+| :------------- | :------- | ------------------ |
+| `options`      | `Object` |                    |
+| `options.key?` | `string` | production API key |
+
+Note: By default it connects to non production database using public default
+key. In order to connect to production database with current company data
+provide your key.
+
+### login
+
+▸ **login**(): `Promise`<void\>
+
+#### Returns
+
+`Promise`<void\>
+
+---
+
+### search
+
+▸ **search**(`query`): `Promise`<any\>
+
+#### Parameters
+
+| Name           | Type     | Notes |
+| :------------- | :------- | ----- |
+| `query`        | `Object` |       |
+| `query.nip?`   | `string` |       |
+| `query.regon?` | `string` |       |
+
+#### Returns
+
+`Promise`<any\>
+
+---
+
+### report
+
+▸ **report**(`query`): `Promise`<any\>
+
+#### Parameters
+
+| Name           | Type     | Notes                 |
+| :------------- | :------- | --------------------- |
+| `query`        | `Object` |                       |
+| `query.regon`  | `string` |                       |
+| `query.report` | `string` | e.g.: `BIR11OsPrawna` |
+
+See BIR1 original documentation for more report types.
+
+#### Returns
+
+`Promise`<any\>
+
+---
+
+### value
+
+▸ **value**(`value`): `Promise`<string\>
+
+#### Parameters
+
+| Name    | Type     |
+| :------ | :------- |
+| `value` | `string` |
+
+#### Returns
+
+`Promise`<string\>
