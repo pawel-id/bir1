@@ -53,7 +53,7 @@ output:
 #### Parameters
 
 | Name           | Type     | Notes              |
-| :------------- | :------- | ------------------ |
+| -------------- | -------- | ------------------ |
 | `options`      | `Object` |                    |
 | `options.key?` | `string` | production API key |
 
@@ -78,7 +78,7 @@ provide your key.
 #### Parameters
 
 | Name           | Type     | Notes |
-| :------------- | :------- | ----- |
+| -------------- | -------- | ----- |
 | `query`        | `Object` |       |
 | `query.nip?`   | `string` |       |
 | `query.regon?` | `string` |       |
@@ -96,7 +96,7 @@ provide your key.
 #### Parameters
 
 | Name           | Type     | Notes                 |
-| :------------- | :------- | --------------------- |
+| -------------- | -------- | --------------------- |
 | `query`        | `Object` |                       |
 | `query.regon`  | `string` |                       |
 | `query.report` | `string` | e.g.: `BIR11OsPrawna` |
@@ -116,7 +116,7 @@ See BIR1 original documentation for more report types.
 #### Parameters
 
 | Name    | Type     |
-| :------ | :------- |
+| ------- | -------- |
 | `value` | `string` |
 
 #### Returns
