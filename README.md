@@ -57,9 +57,9 @@ output:
 | `options`      | `Object` |                    |
 | `options.key?` | `string` | production API key |
 
-Note: By default it connects to non production database using public default
+Note: by default it connects to non production GUS database using public default
 key. In order to connect to production database with current company data
-provide your key.
+provide a key granted by GUS.
 
 ### login
 
