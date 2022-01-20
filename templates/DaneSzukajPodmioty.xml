@@ -8,6 +8,7 @@
       <ns:pParametryWyszukiwania>
         {{#if nip}}<dat:Nip>{{nip}}</dat:Nip>{{/if}}
         {{#if regon}}<dat:Regon>{{regon}}</dat:Regon>{{/if}}
+        {{#if krs}}<dat:Krs>{{krs}}</dat:Krs>{{/if}}
       </ns:pParametryWyszukiwania>
     </ns:DaneSzukajPodmioty>
   </soap:Body>
