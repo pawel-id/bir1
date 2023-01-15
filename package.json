@@ -18,7 +18,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
-    "test": "npm run build && tap --no-coverage"
+    "test": "tap --no-coverage"
   },
   "dependencies": {
     "entities": "^2.2.0",
