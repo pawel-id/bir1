@@ -16,9 +16,9 @@
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "tsc && tap --no-coverage",
     "build": "tsc",
-    "dev": "tsc -w"
+    "dev": "tsc -w",
+    "test": "npm run build && tap --no-coverage"
   },
   "dependencies": {
     "entities": "^2.2.0",
