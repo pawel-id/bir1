@@ -17,6 +17,13 @@ t.test('search by NIP for example company', async (t) => {
   t.end()
 })
 
+t.test('search by KRS for example company', async (t) => {
+  const bir = new Bir()
+  await bir.login()
+  const result = await bir.search({ krs: '0000391193' })
+  t.match(result, { nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA' })
+  t.end()
+})
 
 t.test('search fail for non existing company', async (t) => {
   const bir = new Bir()

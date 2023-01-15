@@ -82,6 +82,7 @@ provide a key granted by GUS.
 | `query`        | `Object` |       |
 | `query.nip?`   | `string` |       |
 | `query.regon?` | `string` |       |
+| `query.krs?`   | `string` |       |
 
 #### Returns
 

@@ -69,7 +69,7 @@ export default class Bir {
     return validate(extractData(result))
   }
 
-  async search(query: { nip: string } | { regon: string }) {
+  async search(query: { nip: string } | { regon: string } | { krs: string }) {
     const body = await template('DaneSzukajPodmioty', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     const result = await xml2json(soapResult(response.body))
