@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "entities": "^2.2.0",
-    "got": "^11.8.2",
+    "got": "^12.5.3",
     "handlebars": "^4.7.7",
     "xml2js": "^0.4.23"
   },
