@@ -3,4 +3,4 @@ dist
 docs
 .vscode/*
 .env
-.nyc_output
+.tap
