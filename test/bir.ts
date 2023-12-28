@@ -1,5 +1,5 @@
-const t = require('tap')
-const Bir = require('..')
+import t from 'tap'
+import Bir from '../src'
 
 t.test('search by REGON for example company', async (t) => {
   const bir = new Bir()
