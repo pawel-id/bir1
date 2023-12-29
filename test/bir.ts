@@ -1,5 +1,5 @@
 import t from 'tap'
-import Bir from '../src'
+import Bir from '../src/index.js'
 
 t.test('search by REGON for example company', async (t) => {
   const bir = new Bir()
