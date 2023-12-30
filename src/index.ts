@@ -1,2 +1,2 @@
-import { default as Bir } from './bir'
+import Bir from './bir.js'
 export = Bir
