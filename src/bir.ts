@@ -1,5 +1,5 @@
 import assert from 'assert'
-import got from 'got'
+import got, { Got } from 'got'
 import { template } from './template.js'
 import { xml2json } from './xml-parser.js'
 import BirError from './bir-error.js'
@@ -33,18 +33,24 @@ export default class Bir {
   private key: string
   private sid?: string
   private prod: boolean
-  private api
+  private _api: Got | undefined
 
   constructor(options: { key?: string } = {}) {
     this.key = options.key || 'abcde12345abcde12345'
     this.prod = options.key ? true : false
-    this.api = got.extend({
-      method: 'POST',
-      prefixUrl: this.prod ? url.prod : url.test,
-      headers: {
-        'Content-Type': 'application/soap+xml',
-      },
-    })
+  }
+
+  async api(options: any) {
+    if (!this._api) {
+      this._api = got.extend({
+        method: 'POST',
+        prefixUrl: this.prod ? url.prod : url.test,
+        headers: {
+          'Content-Type': 'application/soap+xml',
+        },
+      })
+    }
+    return this._api(options)
   }
 
   async login() {
