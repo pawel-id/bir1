@@ -40,7 +40,7 @@ export default class Bir {
     this.prod = options.key ? true : false
   }
 
-  async api(options: any) {
+  private async api(options: any) {
     if (!this._api) {
       this._api = got.extend({
         method: 'POST',
