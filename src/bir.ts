@@ -31,7 +31,7 @@ function validate(data: any) {
 
 /**
  * Class Bir provides access to REGON API
- * 
+ *
  * @example Create a new Bir instance
  * ```js
  *   import Bir from 'bir1'
@@ -100,8 +100,8 @@ export default class Bir {
   }
 
   /**
-   * Get a value (method: GetValue)
-   * It is used to retrieve diagnostic information.
+   * Get diagnostic information (method: GetValue)
+   * @param value value to retrieve
    */
   async value(value: string) {
     const body = await template('GetValue', { value })
