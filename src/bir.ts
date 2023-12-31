@@ -29,12 +29,42 @@ function validate(data: any) {
   return data
 }
 
+/**
+ * Class Bir provides access to REGON API
+ * 
+ * @example Create a new Bir instance
+ * ```js
+ *   import Bir from 'bir1'
+ *   const bir = new Bir()
+ *   await bir.login()
+ *   console.log(await bir.search({ nip: '5261040567' }))
+ *   // output:
+ *   // {
+ *   //   regon: '011417295',
+ *   //   nip: '5261040567',
+ *   //   statusNip: null,
+ *   //   nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA',
+ *   //   ...
+ *   // }
+ * ```
+ */
 export default class Bir {
   private key: string
   private sid?: string
   private prod: boolean
   private _api: Got | undefined
 
+  /**
+   * Creates a new Bir instance
+   * 
+   * @param options.key production API key provided by GUS. 
+   * 
+   * @remarks
+   * If key is not provided, the internally stored public API key is used to 
+   * access non-production database. It allow quick start to play with the API,
+   * however it should be noted that the non-production database contains old
+   * and anonymized data.
+   */
   constructor(options: { key?: string } = {}) {
     this.key = options.key || 'abcde12345abcde12345'
     this.prod = options.key ? true : false
@@ -53,6 +83,13 @@ export default class Bir {
     return this._api(options)
   }
 
+  /**
+   * Login to the API (method: Zaloguj)
+   * 
+   * @remarks
+   * This method must be called before any other method. It is not called
+   * automatically to allow for more control over the login process.
+   */
   async login() {
     assert(this.key, new Error('no api key provided'))
     const body = await template('Zaloguj', { key: this.key })
@@ -62,12 +99,21 @@ export default class Bir {
     this.sid = sid
   }
 
+  /**
+   * Get a value (method: GetValue)
+   * It is used to retrieve diagnostic information.
+   */
   async value(value: string) {
     const body = await template('GetValue', { value })
     const response = await this.api({ body })
     return soapResult(response.body)
   }
 
+  /**
+   * Retrive report (method: DanePobierzPelnyRaport)
+   * @param query.regon REGON number
+   * @param query.report report name
+   */
   async report(query: { regon: string; report: string }) {
     const body = await template('DanePobierzPelnyRaport', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
@@ -75,6 +121,16 @@ export default class Bir {
     return validate(extractData(result))
   }
 
+  /**
+   * Search (method: DaneSzukajPodmioty)
+   * @param query 
+   * @param query.nip NIP number
+   * @param query.regon REGON number
+   * @param query.krs KRS number
+   * 
+   * @remarks
+   * Only one of the query parameters can be used at a time.
+   */
   async search(query: { nip: string } | { regon: string } | { krs: string }) {
     const body = await template('DaneSzukajPodmioty', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
