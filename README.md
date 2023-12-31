@@ -1,9 +1,11 @@
 # BIR1 - GUS REGON client
 
-Simple node.js client library to
-[Statistics Poland](https://en.wikipedia.org/wiki/Statistics_Poland) (GUS)
-information about companies
-[api REGON](https://api.stat.gov.pl/Home/RegonApi?lang=en)
+Simple node.js client library to provide information about companies. It
+connects to [REGON service](https://api.stat.gov.pl/Home/RegonApi?lang=en) and
+returns data in JSON format.
+
+BIR1 (polish: "Baza Internetowa REGON") is an internal name of of the API
+service (hence our package name).
 
 ## Install
 
