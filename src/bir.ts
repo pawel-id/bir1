@@ -56,11 +56,11 @@ export default class Bir {
 
   /**
    * Creates a new Bir instance
-   * 
-   * @param options.key production API key provided by GUS. 
-   * 
+   *
+   * @param options.key production API key provided by GUS.
+   *
    * @remarks
-   * If key is not provided, the internally stored public API key is used to 
+   * If key is not provided, the internally stored public API key is used to
    * access non-production database. It allow quick start to play with the API,
    * however it should be noted that the non-production database contains old
    * and anonymized data.
@@ -85,7 +85,7 @@ export default class Bir {
 
   /**
    * Login to the API (method: Zaloguj)
-   * 
+   *
    * @remarks
    * This method must be called before any other method. It is not called
    * automatically to allow for more control over the login process.
@@ -123,11 +123,11 @@ export default class Bir {
 
   /**
    * Search (method: DaneSzukajPodmioty)
-   * @param query 
+   * @param query
    * @param query.nip NIP number
    * @param query.regon REGON number
    * @param query.krs KRS number
-   * 
+   *
    * @remarks
    * Only one of the query parameters can be used at a time.
    */
