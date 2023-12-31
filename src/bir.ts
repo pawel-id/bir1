@@ -105,7 +105,7 @@ export default class Bir {
    */
   async value(value: string) {
     const body = await template('GetValue', { value })
-    const response = await this.api({ body })
+    const response = await this.api({ headers: { sid: this.sid }, body })
     return soapResult(response.body)
   }
 
