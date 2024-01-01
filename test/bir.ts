@@ -28,7 +28,8 @@ t.test('search by KRS for example company', async (t) => {
 t.test('search fail for non existing company', async (t) => {
   const bir = new Bir()
   await bir.login()
-  const searchNotExisting = async () => await bir.search({ regon: 'notExisting'})
+  const searchNotExisting = async () =>
+    await bir.search({ regon: 'notExisting' })
   await t.rejects(searchNotExisting, {
     message: 'No data found for the specified search criteria',
   })
@@ -38,7 +39,10 @@ t.test('search fail for non existing company', async (t) => {
 t.test('report existing company', async (t) => {
   const bir = new Bir()
   await bir.login()
-  const result = await bir.report({ regon: '011417295', report: 'BIR11OsPrawna' })
+  const result = await bir.report({
+    regon: '011417295',
+    report: 'BIR11OsPrawna',
+  })
   t.match(result, { nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA' })
   t.end()
 })
