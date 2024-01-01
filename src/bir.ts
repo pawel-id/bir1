@@ -48,7 +48,7 @@ export default class Bir {
   private client: Got | undefined
 
   /**
-   * Creates a new Bir instance
+   * Create a new Bir instance
    *
    * @param options.key production API key provided by GUS
    *
