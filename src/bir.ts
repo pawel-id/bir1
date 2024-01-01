@@ -57,9 +57,9 @@ export default class Bir {
    *
    * @remarks
    * If key is not provided, the internally stored public API key is used to
-   * access non-production database. It allow quick start to play with the API,
-   * however it should be noted that the non-production database contains old
-   * and anonymized data.
+   * access non-production GUS database. It allows quick start with the API,
+   * however non-production database contains old and anonymized data.
+   * Providing a key connects to the production database.
    */
   constructor(options: { key?: string } = {}) {
     this.key = options.key || 'abcde12345abcde12345'
