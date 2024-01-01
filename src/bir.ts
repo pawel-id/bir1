@@ -2,7 +2,7 @@ import assert from 'assert'
 import got, { Got } from 'got'
 import { template } from './template.js'
 import { xml2json } from './xml-parser.js'
-import BirError from './bir-error.js'
+import { BirError } from './error.js'
 
 const url = {
   prod: 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
@@ -21,9 +21,7 @@ function soapResult(string: string) {
 async function parse(result: string) {
   let resultObject = await xml2json(result)
   resultObject = resultObject['root']['dane']
-  if (BirError.looksLike(resultObject)) {
-    throw BirError.fromResponse(resultObject)
-  }
+  BirError.assert(resultObject)
   return resultObject
 }
 
