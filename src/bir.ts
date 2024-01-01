@@ -13,7 +13,7 @@ function soapResult(string: string) {
   const match = /<\S+Result>(.+)<\/\S+Result>/s.exec(string)
   assert(
     match && match[1],
-    new Error('SOAP Result empty or not found in response')
+    new BirError('SOAP Result empty or not found in response')
   )
   return match[1]
 }
@@ -87,11 +87,11 @@ export default class Bir {
    * automatically to allow for more control over the login process.
    */
   async login() {
-    assert(this.key, new Error('no api key provided'))
+    assert(this.key, new BirError('No api key provided'))
     const body = await template('Zaloguj', { key: this.key })
     const response = await this.api({ body })
     const sid = soapResult(response.body)
-    assert(sid, new Error('login failed, no session found in response'))
+    assert(sid, new BirError('Login failed, no session found in response'))
     this.sid = sid
   }
 
