@@ -103,6 +103,22 @@ export default class Bir {
   }
 
   /**
+   * Search (method: DaneSzukajPodmioty)
+   * @param query
+   * @param query.nip NIP number
+   * @param query.regon REGON number
+   * @param query.krs KRS number
+   *
+   * @remarks
+   * Only one of the query parameters can be used at a time.
+   */
+  async search(query: { nip: string } | { regon: string } | { krs: string }) {
+    const body = await template('DaneSzukajPodmioty', query)
+    const response = await this.api({ headers: { sid: this.sid }, body })
+    return await parse(soapResult(response.body))
+  }
+
+  /**
    * Retrive report (method: DanePobierzPelnyRaport)
    * @param query.regon REGON number
    * @param query.report report name
@@ -120,22 +136,6 @@ export default class Bir {
    */
   async summary(query: { date: string; report: string }) {
     const body = await template('DanePobierzRaportZbiorczy', query)
-    const response = await this.api({ headers: { sid: this.sid }, body })
-    return await parse(soapResult(response.body))
-  }
-
-  /**
-   * Search (method: DaneSzukajPodmioty)
-   * @param query
-   * @param query.nip NIP number
-   * @param query.regon REGON number
-   * @param query.krs KRS number
-   *
-   * @remarks
-   * Only one of the query parameters can be used at a time.
-   */
-  async search(query: { nip: string } | { regon: string } | { krs: string }) {
-    const body = await template('DaneSzukajPodmioty', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     return await parse(soapResult(response.body))
   }
