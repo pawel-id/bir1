@@ -18,15 +18,13 @@ function soapResult(string: string) {
   return match[1]
 }
 
-function extractData(object: any) {
-  return object['root']['dane']
-}
-
-function validate(data: any) {
-  if (BirError.looksLike(data)) {
-    throw BirError.fromResponse(data)
+async function parse(result: string) {
+  let resultObject = await xml2json(result)
+  resultObject = resultObject['root']['dane']
+  if (BirError.looksLike(resultObject)) {
+    throw BirError.fromResponse(resultObject)
   }
-  return data
+  return resultObject
 }
 
 /**
@@ -117,8 +115,7 @@ export default class Bir {
   async report(query: { regon: string; report: string }) {
     const body = await template('DanePobierzPelnyRaport', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    const result = await xml2json(soapResult(response.body))
-    return validate(extractData(result))
+    return await parse(soapResult(response.body))
   }
 
   /**
@@ -134,7 +131,6 @@ export default class Bir {
   async search(query: { nip: string } | { regon: string } | { krs: string }) {
     const body = await template('DaneSzukajPodmioty', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    const result = await xml2json(soapResult(response.body))
-    return validate(extractData(result))
+    return await parse(soapResult(response.body))
   }
 }
