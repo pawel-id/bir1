@@ -11,10 +11,7 @@ const url = {
 
 function soapResult(string: string) {
   const match = /<\S+Result>(.+)<\/\S+Result>/s.exec(string)
-  assert(
-    match && match[1],
-    new BirError('SOAP Result empty or not found in response')
-  )
+  assert(match?.[1], new BirError('SOAP Result empty or not found in response'))
   return match[1]
 }
 
