@@ -114,6 +114,17 @@ export default class Bir {
   }
 
   /**
+   * Retrive summary report (method: DanePobierzRaportZbiorczy)
+   * @param query.date date in format YYYY-MM-DD not earlier the week before
+   * @param query.report report name
+   */
+  async summary(query: { date: string; report: string }) {
+    const body = await template('DanePobierzRaportZbiorczy', query)
+    const response = await this.api({ headers: { sid: this.sid }, body })
+    return await parse(soapResult(response.body))
+  }
+
+  /**
    * Search (method: DaneSzukajPodmioty)
    * @param query
    * @param query.nip NIP number
