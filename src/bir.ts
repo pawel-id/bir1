@@ -53,7 +53,7 @@ export default class Bir {
   /**
    * Creates a new Bir instance
    *
-   * @param options.key production API key provided by GUS.
+   * @param options.key production API key provided by GUS
    *
    * @remarks
    * If key is not provided, the internally stored public API key is used to
