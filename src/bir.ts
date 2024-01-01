@@ -48,7 +48,7 @@ export default class Bir {
   private key: string
   private sid?: string
   private prod: boolean
-  private _api: Got | undefined
+  private client: Got | undefined
 
   /**
    * Creates a new Bir instance
@@ -67,8 +67,8 @@ export default class Bir {
   }
 
   private async api(options: any) {
-    if (!this._api) {
-      this._api = got.extend({
+    if (!this.client) {
+      this.client = got.extend({
         method: 'POST',
         prefixUrl: this.prod ? url.prod : url.test,
         headers: {
@@ -76,7 +76,7 @@ export default class Bir {
         },
       })
     }
-    return this._api(options)
+    return this.client(options)
   }
 
   /**
