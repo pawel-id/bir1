@@ -10,10 +10,10 @@ BIR1 (polish: "Baza Internetowa REGON") is an internal name of the API service
 ## Install
 
 ```bash
-npm i bir1
+npm install bir1
 ```
 
-## Usage
+## Quick start
 
 ```javascript
 import Bir from 'bir1'
