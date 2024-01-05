@@ -1,0 +1,11 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-rename-defaults"],
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "hideBreadcrumbs": true,
+  "hideInPageTOC": true,
+  "entryPoints": ["./src/"],
+  "out": "./doc"
+}
