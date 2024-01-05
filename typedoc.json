@@ -1,6 +1,11 @@
 {
   "$schema": "https://typedoc.org/schema.json",
-  "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-rename-defaults"],
+  "plugin": [
+    "typedoc-plugin-markdown",
+    "typedoc-plugin-rename-defaults",
+    "typedoc-plugin-missing-exports"
+  ],
+  "excludeExternals": true,
   "excludeInternal": true,
   "excludePrivate": true,
   "excludeProtected": true,
