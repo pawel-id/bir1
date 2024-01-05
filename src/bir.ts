@@ -3,6 +3,11 @@ import got, { Got } from 'got'
 import { template } from './template.js'
 import { xml2json } from './xml-parser.js'
 import { BirError } from './error.js'
+import {
+  GetValueOptions,
+  DanePobierzPelnyRaportOptions,
+  DanePobierzRaportZbiorczyOptions,
+} from './types.js'
 
 const url = {
   prod: 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
@@ -96,7 +101,7 @@ export default class Bir {
    * Get diagnostic information (method: GetValue)
    * @param value value to retrieve
    */
-  async value(value: string) {
+  async value(value: GetValueOptions) {
     const body = await template('GetValue', { value })
     const response = await this.api({ headers: { sid: this.sid }, body })
     return soapResult(response.body)
@@ -123,7 +128,10 @@ export default class Bir {
    * @param query.regon REGON number
    * @param query.report report name
    */
-  async report(query: { regon: string; report: string }) {
+  async report(query: {
+    regon: string
+    report: DanePobierzPelnyRaportOptions
+  }) {
     const body = await template('DanePobierzPelnyRaport', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     return await parse(soapResult(response.body))
@@ -134,7 +142,10 @@ export default class Bir {
    * @param query.date date in format YYYY-MM-DD not earlier the week before
    * @param query.report report name
    */
-  async summary(query: { date: string; report: string }) {
+  async summary(query: {
+    date: string
+    report: DanePobierzRaportZbiorczyOptions
+  }) {
     const body = await template('DanePobierzRaportZbiorczy', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
     return await parse(soapResult(response.body))
