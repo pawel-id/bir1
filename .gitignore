@@ -1,7 +1,5 @@
 node_modules
 dist
-doc
 .vscode/*
 .env
 .tap
-
