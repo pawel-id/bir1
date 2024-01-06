@@ -2,10 +2,12 @@
 
 Simple node.js client library to provide information about companies. It
 connects to [REGON service](https://api.stat.gov.pl/Home/RegonApi?lang=en) and
-returns data in JSON format.
+returns data in JSON format. Supports all BIR 1.0 and 1.1 API methods.
 
 BIR1 (polish: "Baza Internetowa REGON") is an internal name of the API service
 (hence our package name).
+
+It is written in TypeScript and provides type definitions.
 
 ## Install
 
@@ -21,29 +23,19 @@ import Bir from 'bir1'
 const bir = new Bir()
 await bir.login()
 console.log(await bir.search({ nip: '5261040567' }))
-
-/*
-output: 
-
-{
-  regon: '011417295',
-  nip: '5261040567',
-  statusNip: '',
-  nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA',
-  wojewodztwo: 'MAZOWIECKIE',
-  powiat: 'Warszawa',
-  gmina: 'Mokotów',
-  miejscowosc: 'Warszawa',
-  kodPocztowy: '02-674',
-  ulica: 'ul. Marynarska',
-  nrNieruchomosci: '12',
-  nrLokalu: '',
-  typ: 'P',
-  silosID: '6',
-  dataZakonczeniaDzialalnosci: '',
-  miejscowoscPoczty: 'Warszawa'
-}
-*/
+// output:
+// {
+//   regon: '011417295',
+//   nip: '5261040567',
+//   statusNip: '',
+//   nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA',
+//   wojewodztwo: 'MAZOWIECKIE',
+//   powiat: 'Warszawa',
+//   gmina: 'Mokotów',
+//   miejscowosc: 'Warszawa',
+//   kodPocztowy: '02-674',
+//   ...
+// }
 ```
 
 ## API
