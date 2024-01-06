@@ -23,14 +23,24 @@ export interface ParseOptions {
   xmlOptions?: XmlOptions
 }
 
+/**
+ * Default parse options. Empty tags are not replaced. Tag names are not
+ * transformed. This is used when no options are provided to Xml constructor.
+ */
 export const defaultParseOptions: ParseOptions = {
   emptyTag: '',
   xmlOptions: {
-    // to avoid parsing string to number
+    // to avoid parsing tag values of type string into number
     parseTagValue: false,
   },
 }
 
+/**
+ * Legacy parse options for backward compatibility. This allow to restore
+ * behavior of previous versions of this library. It replaces empty tags
+ * with `undefined` and transform tag names by removing `praw_` prefix and
+ * lowercasing. This is not recommended for new projects.
+ */
 export const legacyParseOptions: ParseOptions = {
   emptyTag: undefined,
   xmlOptions: {
@@ -41,8 +51,8 @@ export const legacyParseOptions: ParseOptions = {
 }
 
 /**
- * Within object `obj` replace empty string attributes values with `replacer`.
- * Modifies the object in place.
+ * Utility function to take object `obj` and replace empty string attributes
+ * with `replacer` value. Modifies the object in place.
  */
 export function replaceEmpty(obj: Record<string, any>, replacer: any) {
   for (let [key, val] of Object.entries(obj)) {
