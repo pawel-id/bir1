@@ -22,7 +22,10 @@ export const KomunikatKodErrorCodes = {
   '7': 'Brak sesji. Sesja wygasła lub przekazano nieprawidłową wartość nagłówka sid.',
 }
 
-export type DanePobierzPelnyRaportBir1Options =
+/**
+ * Reports for method `DanePobierzPelnyRaport`.
+ */
+export type DanePobierzPelnyRaportOptions =
   | 'PublDaneRaportFizycznaOsoba'
   | 'PublDaneRaportDzialalnoscFizycznejCeidg'
   | 'PublDaneRaportDzialalnoscFizycznejRolnicza'
@@ -39,8 +42,6 @@ export type DanePobierzPelnyRaportBir1Options =
   | 'PublDaneRaportDzialalnosciLokalnejPrawnej'
   | 'PublDaneRaportWspolnicyPrawnej'
   | 'PublDaneRaportTypJednostki'
-
-export type DanePobierzPelnyRaportBir11Options =
   | 'BIR11OsFizycznaDaneOgolne'
   | 'BIR11OsFizycznaDzialalnoscCeidg'
   | 'BIR11OsFizycznaDzialalnoscRolnicza'
@@ -57,14 +58,6 @@ export type DanePobierzPelnyRaportBir11Options =
   | 'BIR11JednLokalnaOsPrawnejPkd'
   | 'BIR11OsPrawnaSpCywilnaWspolnicy'
   | 'BIR11TypPodmiotu'
-
-/**
- * Reports for method `DanePobierzPelnyRaport`.
- *
- */
-export type DanePobierzPelnyRaportOptions =
-  | DanePobierzPelnyRaportBir1Options
-  | DanePobierzPelnyRaportBir11Options
 
 /**
  * Reports for method `DanePobierzRaportZbiorczy`.

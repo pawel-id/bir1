@@ -88,9 +88,8 @@ export default class Bir {
   }
 
   /**
-   * Parse provided `result` xml string into native object. Skip some top level
-   * unnecessary properties and check for errors. Return javascript object
-   * reflecting provided xml.
+   * Parse provided `result` xml string into native javascript object. Check for
+   * errors and throws when neede. Return plain object reflecting provided xml.
    * @param result xml string
    * @returns parsed object
    */
