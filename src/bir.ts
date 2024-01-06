@@ -89,7 +89,7 @@ export default class Bir {
 
   /**
    * Parse provided `result` xml string into native javascript object. Check for
-   * errors and throws when neede. Return plain object reflecting provided xml.
+   * errors and throws when needed. Return plain object reflecting provided xml.
    * @param result xml string
    * @returns parsed object
    */
