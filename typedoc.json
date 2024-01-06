@@ -11,6 +11,8 @@
   "excludeProtected": true,
   "hideBreadcrumbs": true,
   "hideInPageTOC": true,
+  "sort": ["source-order"],
   "entryPoints": ["./src/"],
+  "readme": "none",
   "out": "./doc"
 }
