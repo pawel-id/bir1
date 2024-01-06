@@ -32,16 +32,23 @@ Create a new Bir instance
 | Name | Type | Description |
 | :------ | :------ | :------ |
 | `options` | `Object` | - |
-| `options.key?` | `string` | API key provided by GUS. **`Remarks`** If `options.key` is not provided, the internally stored public API key is used to access non-production GUS database. It allows quick start, however non-production database contains old and anonymized data. Providing GUS provided key connects to the production database. |
+| `options.key?` | `string` | API key provided by GUS. |
 | `options.parseOptions?` | [`ParseOptions`](../interfaces/internal_.ParseOptions.md) | Additional parse options for XML parser |
 
 #### Returns
 
 [`Bir`](Bir.md)
 
+**`Remarks`**
+
+If `options.key` is not provided, the internally stored public API key
+is used to access non-production GUS database. It allows quick start,
+however non-production database contains old and anonymized data.
+Providing GUS provided key connects to the production database.
+
 #### Defined in
 
-[bir.ts:53](https://github.com/pawel-id/bir1/blob/140054f/src/bir.ts#L53)
+[bir.ts:59](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L59)
 
 ## Methods
 
@@ -62,7 +69,7 @@ automatically to allow for more control over the login process.
 
 #### Defined in
 
-[bir.ts:113](https://github.com/pawel-id/bir1/blob/140054f/src/bir.ts#L113)
+[bir.ts:113](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L113)
 
 ___
 
@@ -84,7 +91,7 @@ Get diagnostic information (method: GetValue)
 
 #### Defined in
 
-[bir.ts:126](https://github.com/pawel-id/bir1/blob/140054f/src/bir.ts#L126)
+[bir.ts:126](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L126)
 
 ___
 
@@ -110,7 +117,7 @@ Only one of the query parameters can be used at a time.
 
 #### Defined in
 
-[bir.ts:142](https://github.com/pawel-id/bir1/blob/140054f/src/bir.ts#L142)
+[bir.ts:142](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L142)
 
 ___
 
@@ -134,7 +141,7 @@ Retrive report (method: DanePobierzPelnyRaport)
 
 #### Defined in
 
-[bir.ts:153](https://github.com/pawel-id/bir1/blob/140054f/src/bir.ts#L153)
+[bir.ts:153](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L153)
 
 ___
 
@@ -158,7 +165,7 @@ Retrive summary report (method: DanePobierzRaportZbiorczy)
 
 #### Defined in
 
-[bir.ts:167](https://github.com/pawel-id/bir1/blob/140054f/src/bir.ts#L167)
+[bir.ts:167](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L167)
 
 ___
 
@@ -174,4 +181,4 @@ Logout (method: Wyloguj)
 
 #### Defined in
 
-[bir.ts:179](https://github.com/pawel-id/bir1/blob/140054f/src/bir.ts#L179)
+[bir.ts:179](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L179)

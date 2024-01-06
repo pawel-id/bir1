@@ -49,17 +49,17 @@ export default class Bir {
 
   /**
    * Create a new Bir instance
+   *
+   * @remarks
+   * If `options.key` is not provided, the internally stored public API key
+   * is used to access non-production GUS database. It allows quick start,
+   * however non-production database contains old and anonymized data.
+   * Providing GUS provided key connects to the production database.
    */
   constructor(
     options: {
       /**
        * API key provided by GUS.
-       *
-       * @remarks
-       * If `options.key` is not provided, the internally stored public API key
-       * is used to access non-production GUS database. It allows quick start,
-       * however non-production database contains old and anonymized data.
-       * Providing GUS provided key connects to the production database.
        */
       key?: string
 

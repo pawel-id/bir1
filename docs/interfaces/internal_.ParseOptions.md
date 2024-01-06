@@ -14,7 +14,7 @@ the empty tags are futher replaced by that value, overriding default ''.
 
 #### Defined in
 
-[xml.ts:14](https://github.com/pawel-id/bir1/blob/140054f/src/xml.ts#L14)
+[xml.ts:14](https://github.com/pawel-id/bir1/blob/1ce2a01/src/xml.ts#L14)
 
 ___
 
@@ -30,4 +30,4 @@ See [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser/blo
 
 #### Defined in
 
-[xml.ts:23](https://github.com/pawel-id/bir1/blob/140054f/src/xml.ts#L23)
+[xml.ts:23](https://github.com/pawel-id/bir1/blob/1ce2a01/src/xml.ts#L23)

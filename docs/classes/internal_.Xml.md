@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[xml.ts:62](https://github.com/pawel-id/bir1/blob/140054f/src/xml.ts#L62)
+[xml.ts:62](https://github.com/pawel-id/bir1/blob/1ce2a01/src/xml.ts#L62)
 
 ## Methods
 
@@ -40,4 +40,4 @@
 
 #### Defined in
 
-[xml.ts:74](https://github.com/pawel-id/bir1/blob/140054f/src/xml.ts#L74)
+[xml.ts:74](https://github.com/pawel-id/bir1/blob/1ce2a01/src/xml.ts#L74)

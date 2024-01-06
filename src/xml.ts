@@ -54,6 +54,9 @@ export function replaceEmpty(obj: Record<string, any>, replacer: any) {
   }
 }
 
+/**
+ * Class Xml handle parsing XML responses into JavaScript object.
+ */
 export class Xml {
   private emptyTag?: EmptyTag
   private xmlOptions: XmlOptions
