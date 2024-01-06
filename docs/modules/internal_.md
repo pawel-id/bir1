@@ -18,7 +18,7 @@ Options for method `GetValue`.
 
 #### Defined in
 
-[types.ts:4](https://github.com/pawel-id/bir1/blob/1ce2a01/src/types.ts#L4)
+[types.ts:4](https://github.com/pawel-id/bir1/blob/5ed6031/src/types.ts#L4)
 
 ___
 
@@ -30,7 +30,7 @@ Reports for method `DanePobierzPelnyRaport`.
 
 #### Defined in
 
-[types.ts:28](https://github.com/pawel-id/bir1/blob/1ce2a01/src/types.ts#L28)
+[types.ts:28](https://github.com/pawel-id/bir1/blob/5ed6031/src/types.ts#L28)
 
 ___
 
@@ -42,7 +42,7 @@ Reports for method `DanePobierzRaportZbiorczy`.
 
 #### Defined in
 
-[types.ts:65](https://github.com/pawel-id/bir1/blob/1ce2a01/src/types.ts#L65)
+[types.ts:65](https://github.com/pawel-id/bir1/blob/5ed6031/src/types.ts#L65)
 
 ___
 
@@ -52,4 +52,4 @@ ___
 
 #### Defined in
 
-[xml.ts:5](https://github.com/pawel-id/bir1/blob/1ce2a01/src/xml.ts#L5)
+[xml.ts:5](https://github.com/pawel-id/bir1/blob/5ed6031/src/xml.ts#L5)

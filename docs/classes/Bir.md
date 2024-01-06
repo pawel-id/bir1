@@ -48,7 +48,7 @@ Providing GUS provided key connects to the production database.
 
 #### Defined in
 
-[bir.ts:59](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L59)
+[bir.ts:59](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L59)
 
 ## Methods
 
@@ -69,7 +69,7 @@ automatically to allow for more control over the login process.
 
 #### Defined in
 
-[bir.ts:113](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L113)
+[bir.ts:113](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L113)
 
 ___
 
@@ -91,7 +91,7 @@ Get diagnostic information (method: GetValue)
 
 #### Defined in
 
-[bir.ts:126](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L126)
+[bir.ts:126](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L126)
 
 ___
 
@@ -117,7 +117,7 @@ Only one of the query parameters can be used at a time.
 
 #### Defined in
 
-[bir.ts:142](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L142)
+[bir.ts:142](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L142)
 
 ___
 
@@ -141,7 +141,7 @@ Retrive report (method: DanePobierzPelnyRaport)
 
 #### Defined in
 
-[bir.ts:153](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L153)
+[bir.ts:153](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L153)
 
 ___
 
@@ -165,7 +165,7 @@ Retrive summary report (method: DanePobierzRaportZbiorczy)
 
 #### Defined in
 
-[bir.ts:167](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L167)
+[bir.ts:167](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L167)
 
 ___
 
@@ -181,4 +181,4 @@ Logout (method: Wyloguj)
 
 #### Defined in
 
-[bir.ts:179](https://github.com/pawel-id/bir1/blob/1ce2a01/src/bir.ts#L179)
+[bir.ts:179](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L179)
