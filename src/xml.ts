@@ -75,7 +75,7 @@ export class Xml {
   constructor(options: Partial<ParseOptions> = {}) {
     // emptyTag could be null or undefined, then we need check if
     // that property exists in options object
-    if (options && Object.hasOwn(options, 'emptyTag')) {
+    if (options && Object.prototype.hasOwnProperty.call(options, 'emptyTag')) {
       this.emptyTag = options.emptyTag
     } else {
       this.emptyTag = defaultParseOptions.emptyTag
