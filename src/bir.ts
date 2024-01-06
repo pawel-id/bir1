@@ -161,7 +161,7 @@ export default class Bir {
 
   /**
    * Retrive summary report (method: DanePobierzRaportZbiorczy)
-   * @param query.date date in format YYYY-MM-DD not earlier the week before
+   * @param query.date date in format YYYY-MM-DD not earlier than week before
    * @param query.report report name
    */
   async summary(query: {
