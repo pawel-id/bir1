@@ -20,7 +20,7 @@
     "templates"
   ],
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf docs dist && typedoc && tsc",
     "dev": "tsc -w",
     "test": "tap"
   },
