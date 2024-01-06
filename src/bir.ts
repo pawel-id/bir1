@@ -1,7 +1,7 @@
 import assert from 'assert'
 import got, { Got } from 'got'
 import { template } from './template.js'
-import { parse, ParseOptions } from './xml.js'
+import { Xml, ParseOptions } from './xml.js'
 import { BirError } from './error.js'
 import {
   GetValueOptions,
@@ -18,31 +18,6 @@ function soapResult(string: string) {
   const match = /<\S+Result>(.+)<\/\S+Result>/s.exec(string)
   assert(match?.[1], new BirError('SOAP Result empty or not found in response'))
   return match[1]
-}
-
-function extract(result: string, parserOptions?: ParseOptions) {
-  let resultObject = parse(result, parserOptions)
-  resultObject = resultObject['root']['dane']
-  BirError.assert(resultObject)
-  return resultObject
-}
-
-interface BirOptions {
-  /**
-   * API key provided by GUS
-   *
-   * @remarks
-   * If `options.key` is not provided, the internally stored public API key 
-   * is used to access non-production GUS database. It allows quick start with
-   * the API, however non-production database contains old and anonymized data.
-   * Providing a key connects to the production database.
-   */
-  key?: string
-
-  /**
-   * Additional parse options for XML parser
-   */
-  parseOptions?: ParseOptions
 }
 
 /**
@@ -65,24 +40,43 @@ interface BirOptions {
  * ```
  */
 export default class Bir {
-  key: string
-  sid?: string
-  prod: boolean
-  parseOptions?: ParseOptions
-  client: Got | undefined
+  private key: string
+  private sid?: string
+  private prod: boolean
+  private parseOptions?: ParseOptions
+  private _client?: Got
+  private _xml?: Xml
 
   /**
    * Create a new Bir instance
    */
-  constructor(options: BirOptions = {}) {
+  constructor(
+    options: {
+      /**
+       * API key provided by GUS.
+       *
+       * @remarks
+       * If `options.key` is not provided, the internally stored public API key
+       * is used to access non-production GUS database. It allows quick start,
+       * however non-production database contains old and anonymized data.
+       * Providing GUS provided key connects to the production database.
+       */
+      key?: string
+
+      /**
+       * Additional parse options for XML parser
+       */
+      parseOptions?: ParseOptions
+    } = {}
+  ) {
     this.key = options.key || 'abcde12345abcde12345'
     this.prod = options.key ? true : false
     this.parseOptions = options.parseOptions
   }
 
   private async api(options: any) {
-    if (!this.client) {
-      this.client = got.extend({
+    if (!this._client) {
+      this._client = got.extend({
         method: 'POST',
         prefixUrl: this.prod ? url.prod : url.test,
         headers: {
@@ -90,7 +84,24 @@ export default class Bir {
         },
       })
     }
-    return this.client(options)
+    return this._client(options)
+  }
+
+  /**
+   * Parse provided `result` xml string into native object. Skip some top level
+   * unnecessary properties and check for errors. Return javascript object
+   * reflecting provided xml.
+   * @param result xml string
+   * @returns parsed object
+   */
+  private extract(result: string) {
+    if (!this._xml) {
+      this._xml = new Xml(this.parseOptions)
+    }
+    let resultObject = this._xml.parse(result)
+    resultObject = resultObject['root']['dane']
+    BirError.assert(resultObject)
+    return resultObject
   }
 
   /**
@@ -132,7 +143,7 @@ export default class Bir {
   async search(query: { nip: string } | { regon: string } | { krs: string }) {
     const body = await template('DaneSzukajPodmioty', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    return extract(soapResult(response.body), this.parseOptions)
+    return this.extract(soapResult(response.body))
   }
 
   /**
@@ -146,7 +157,7 @@ export default class Bir {
   }) {
     const body = await template('DanePobierzPelnyRaport', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    return extract(soapResult(response.body), this.parseOptions)
+    return this.extract(soapResult(response.body))
   }
 
   /**
@@ -160,7 +171,7 @@ export default class Bir {
   }) {
     const body = await template('DanePobierzRaportZbiorczy', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    return extract(soapResult(response.body), this.parseOptions)
+    return this.extract(soapResult(response.body))
   }
 
   /**

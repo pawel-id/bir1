@@ -6,7 +6,20 @@ export type EmptyTag = string | null | undefined
 export type XmlOptions = Partial<X2jOptions>
 
 export interface ParseOptions {
+  /**
+   * When parsing XML the empty tags are replaced by '' - this is the default
+   * behavior of fast-ml-parser. When this variable is set to any other value,
+   * the empty tags are futher replaced by that value, overriding default ''.
+   */
   emptyTag?: EmptyTag
+
+  /**
+   * Additional parse options for XML parser. Any option of fast-xml-parser
+   * can be used here. This object is passed to the constructor of
+   * fast-xml-parser. Then parser is used to parse XML response from GUS.
+   *
+   * See {@link https://github.com/NaturalIntelligence/fast-xml-parser/blob/HEAD/docs/v4/2.XMLparseOptions.md | fast-xml-parser}
+   */
   xmlOptions?: XmlOptions
 }
 
@@ -41,22 +54,33 @@ export function replaceEmpty(obj: Record<string, any>, replacer: any) {
   }
 }
 
-export function parse(
-  xml: string,
-  options: ParseOptions = defaultParseOptions
-) {
-  const parser = new XMLParser({
-    ...defaultParseOptions.xmlOptions,
-    ...options.xmlOptions,
-  })
-  const result = parser.parse(decodeXML(xml))
+export class Xml {
+  private emptyTag?: EmptyTag
+  private xmlOptions: XmlOptions
+  private _parser?: XMLParser
 
-  /* Current version fast-xml-parser does not support empty tag replacement, 
-    but it returns empty string '' for empty tags (which is sensible option).
-    Anyway if needed we can replace it with anything else. */
-  if (options.emptyTag !== defaultParseOptions.emptyTag) {
-    replaceEmpty(result, options.emptyTag)
+  constructor(options: Partial<ParseOptions> = {}) {
+    // emptyTag could be null or undefined, then we need check if
+    // that property exists in options object
+    if (options && Object.hasOwn(options, 'emptyTag')) {
+      this.emptyTag = options.emptyTag
+    } else {
+      this.emptyTag = defaultParseOptions.emptyTag
+    }
+    this.xmlOptions =
+      options.xmlOptions || (defaultParseOptions.xmlOptions as XmlOptions)
   }
 
-  return result
+  parse(xml: string) {
+    if (!this._parser) {
+      this._parser = new XMLParser(this.xmlOptions)
+    }
+    const result = this._parser.parse(decodeXML(xml))
+
+    if (this.emptyTag !== '') {
+      replaceEmpty(result, this.emptyTag)
+    }
+
+    return result
+  }
 }
