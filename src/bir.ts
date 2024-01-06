@@ -175,10 +175,8 @@ export default class Bir {
 
   /**
    * Logout (method: Wyloguj)
-   *
    */
   async logout() {
-    assert(this.sid, new BirError('Not loggged in'))
     const body = await template('Wyloguj', { sid: this.sid })
     const response = await this.api({ body })
     soapResult(response.body)
