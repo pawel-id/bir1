@@ -28,7 +28,7 @@ output:
 {
   regon: '011417295',
   nip: '5261040567',
-  statusNip: null,
+  statusNip: '',
   nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA',
   wojewodztwo: 'MAZOWIECKIE',
   powiat: 'Warszawa',
@@ -37,10 +37,10 @@ output:
   kodPocztowy: '02-674',
   ulica: 'ul. Marynarska',
   nrNieruchomosci: '12',
-  nrLokalu: null,
+  nrLokalu: '',
   typ: 'P',
   silosID: '6',
-  dataZakonczeniaDzialalnosci: null,
+  dataZakonczeniaDzialalnosci: '',
   miejscowoscPoczty: 'Warszawa'
 }
 */

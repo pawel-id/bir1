@@ -26,10 +26,10 @@
   },
   "dependencies": {
     "entities": "^4.5.0",
+    "fast-xml-parser": "^4.3.2",
     "got": "^11.8.2",
     "handlebars": "^4.7.8",
-    "typedoc-plugin-missing-exports": "^2.1.0",
-    "xml2js": "^0.6.2"
+    "typedoc-plugin-missing-exports": "^2.1.0"
   },
   "devDependencies": {
     "@tapjs/tsx": "^1.1.18",

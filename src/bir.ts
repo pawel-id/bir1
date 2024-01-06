@@ -1,7 +1,7 @@
 import assert from 'assert'
 import got, { Got } from 'got'
 import { template } from './template.js'
-import { xml2json } from './xml-parser.js'
+import { parse, ParseOptions } from './xml.js'
 import { BirError } from './error.js'
 import {
   GetValueOptions,
@@ -20,11 +20,29 @@ function soapResult(string: string) {
   return match[1]
 }
 
-async function parse(result: string) {
-  let resultObject = await xml2json(result)
+function extract(result: string, parserOptions?: ParseOptions) {
+  let resultObject = parse(result, parserOptions)
   resultObject = resultObject['root']['dane']
   BirError.assert(resultObject)
   return resultObject
+}
+
+interface BirOptions {
+  /**
+   * API key provided by GUS
+   *
+   * @remarks
+   * If `options.key` is not provided, the internally stored public API key 
+   * is used to access non-production GUS database. It allows quick start with
+   * the API, however non-production database contains old and anonymized data.
+   * Providing a key connects to the production database.
+   */
+  key?: string
+
+  /**
+   * Additional parse options for XML parser
+   */
+  parseOptions?: ParseOptions
 }
 
 /**
@@ -40,32 +58,26 @@ async function parse(result: string) {
  *   // {
  *   //   regon: '011417295',
  *   //   nip: '5261040567',
- *   //   statusNip: null,
+ *   //   statusNip: '',
  *   //   nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA',
  *   //   ...
  *   // }
  * ```
  */
 export default class Bir {
-  private key: string
-  private sid?: string
-  private prod: boolean
-  private client: Got | undefined
+  key: string
+  sid?: string
+  prod: boolean
+  parseOptions?: ParseOptions
+  client: Got | undefined
 
   /**
    * Create a new Bir instance
-   *
-   * @param options.key production API key provided by GUS
-   *
-   * @remarks
-   * If key is not provided, the internally stored public API key is used to
-   * access non-production GUS database. It allows quick start with the API,
-   * however non-production database contains old and anonymized data.
-   * Providing a key connects to the production database.
    */
-  constructor(options: { key?: string } = {}) {
+  constructor(options: BirOptions = {}) {
     this.key = options.key || 'abcde12345abcde12345'
     this.prod = options.key ? true : false
+    this.parseOptions = options.parseOptions
   }
 
   private async api(options: any) {
@@ -120,7 +132,7 @@ export default class Bir {
   async search(query: { nip: string } | { regon: string } | { krs: string }) {
     const body = await template('DaneSzukajPodmioty', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    return await parse(soapResult(response.body))
+    return extract(soapResult(response.body), this.parseOptions)
   }
 
   /**
@@ -134,7 +146,7 @@ export default class Bir {
   }) {
     const body = await template('DanePobierzPelnyRaport', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    return await parse(soapResult(response.body))
+    return extract(soapResult(response.body), this.parseOptions)
   }
 
   /**
@@ -148,7 +160,7 @@ export default class Bir {
   }) {
     const body = await template('DanePobierzRaportZbiorczy', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    return await parse(soapResult(response.body))
+    return extract(soapResult(response.body), this.parseOptions)
   }
 
   /**
