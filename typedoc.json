@@ -13,6 +13,8 @@
   "hideInPageTOC": true,
   "sort": ["source-order"],
   "entryPoints": ["./src/"],
+  "disableGit": true,
+  "disableSources": true,
   "readme": "none",
   "out": "./docs"
 }
