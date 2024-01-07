@@ -20,10 +20,6 @@ Class Xml handle parsing XML responses into JavaScript object.
 
 [`Xml`](internal_.Xml.md)
 
-#### Defined in
-
-[xml.ts:75](https://github.com/pawel-id/bir1/blob/5ed6031/src/xml.ts#L75)
-
 ## Methods
 
 ### parse
@@ -39,7 +35,3 @@ Class Xml handle parsing XML responses into JavaScript object.
 #### Returns
 
 `any`
-
-#### Defined in
-
-[xml.ts:87](https://github.com/pawel-id/bir1/blob/5ed6031/src/xml.ts#L87)

@@ -46,10 +46,6 @@ is used to access non-production GUS database. It allows quick start,
 however non-production database contains old and anonymized data.
 Providing GUS provided key connects to the production database.
 
-#### Defined in
-
-[bir.ts:59](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L59)
-
 ## Methods
 
 ### login
@@ -66,10 +62,6 @@ Login to the API (method: Zaloguj)
 
 This method must be called before any other method. It is not called
 automatically to allow for more control over the login process.
-
-#### Defined in
-
-[bir.ts:113](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L113)
 
 ___
 
@@ -88,10 +80,6 @@ Get diagnostic information (method: GetValue)
 #### Returns
 
 `Promise`\<`string`\>
-
-#### Defined in
-
-[bir.ts:126](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L126)
 
 ___
 
@@ -115,10 +103,6 @@ Search (method: DaneSzukajPodmioty)
 
 Only one of the query parameters can be used at a time.
 
-#### Defined in
-
-[bir.ts:142](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L142)
-
 ___
 
 ### report
@@ -138,10 +122,6 @@ Retrive report (method: DanePobierzPelnyRaport)
 #### Returns
 
 `Promise`\<`any`\>
-
-#### Defined in
-
-[bir.ts:153](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L153)
 
 ___
 
@@ -163,10 +143,6 @@ Retrive summary report (method: DanePobierzRaportZbiorczy)
 
 `Promise`\<`any`\>
 
-#### Defined in
-
-[bir.ts:167](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L167)
-
 ___
 
 ### logout
@@ -178,7 +154,3 @@ Logout (method: Wyloguj)
 #### Returns
 
 `Promise`\<`void`\>
-
-#### Defined in
-
-[bir.ts:179](https://github.com/pawel-id/bir1/blob/5ed6031/src/bir.ts#L179)
