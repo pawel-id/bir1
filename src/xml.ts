@@ -1,6 +1,6 @@
 import { decodeXML } from 'entities'
 import { XMLParser, X2jOptions } from 'fast-xml-parser'
-import { lowercaseFirstLetter, stripPrefix } from './normalize.js'
+import { lowerFirstLetter, stripPrefix } from './normalize.js'
 
 export type EmptyTag = string | null | undefined
 export type XmlOptions = Partial<X2jOptions>
@@ -40,13 +40,14 @@ export const defaultParseOptions: ParseOptions = {
  * behavior of previous versions of this library. It replaces empty tags
  * with `undefined` and transform tag names by removing `praw_` prefix and
  * lowercasing. This is not recommended for new projects.
+ * @deprecated
  */
 export const legacyParseOptions: ParseOptions = {
   emptyTag: undefined,
   xmlOptions: {
     ...defaultParseOptions.xmlOptions,
     transformTagName: (name: string) =>
-      lowercaseFirstLetter(stripPrefix(name, 'praw_')),
+      lowerFirstLetter(stripPrefix(name, 'praw_')),
   },
 }
 
