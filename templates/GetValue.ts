@@ -12,6 +12,6 @@ const GetValue = (params: { value: string }) => {
       </soap:Body>
     </soap:Envelope>
   `
-}
+};
 
 export { GetValue };
