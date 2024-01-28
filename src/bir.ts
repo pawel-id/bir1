@@ -14,7 +14,6 @@ const url = {
   test: 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
 }
 
-
 /**
  * Class Bir provides access to REGON API
  *
@@ -38,6 +37,7 @@ export default class Bir {
   private key: string
   private sid?: string
   private prod: boolean
+  private _normalizeFn?: (obj: any) => any
   private _client?: Got
 
   /**
@@ -55,10 +55,24 @@ export default class Bir {
        * API key provided by GUS.
        */
       key?: string
+
+      /**
+       * Function to normalize the response object i.e. to mutate response
+       * to a more convenient format.
+       */
+      normalizeFn?: (obj: any) => any
     } = {}
   ) {
     this.key = options.key || 'abcde12345abcde12345'
     this.prod = options.key ? true : false
+    this._normalizeFn = options.normalizeFn
+  }
+
+  private normalize(obj: any) {
+    if (this._normalizeFn) {
+      this._normalizeFn(obj)
+    }
+    return obj
   }
 
   private async api(options: any) {
@@ -113,7 +127,7 @@ export default class Bir {
   async search(query: { nip: string } | { regon: string } | { krs: string }) {
     const body = await template('DaneSzukajPodmioty', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    return parse(unsoap(response.body))
+    return this.normalize(parse(unsoap(response.body)))
   }
 
   /**
@@ -127,7 +141,7 @@ export default class Bir {
   }) {
     const body = await template('DanePobierzPelnyRaport', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    return parse(unsoap(response.body))
+    return this.normalize(parse(unsoap(response.body)))
   }
 
   /**
@@ -141,7 +155,7 @@ export default class Bir {
   }) {
     const body = await template('DanePobierzRaportZbiorczy', query)
     const response = await this.api({ headers: { sid: this.sid }, body })
-    return parse(unsoap(response.body))
+    return this.normalize(parse(unsoap(response.body)))
   }
 
   /**
