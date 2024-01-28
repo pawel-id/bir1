@@ -14,7 +14,7 @@ function legacyNormalize(obj: any) {
   ])
 }
 
-async function main() {
+;(async function main() {
   const bir = new Bir({ normalizeFn: legacyNormalize })
   await bir.login()
   console.log(
@@ -23,6 +23,4 @@ async function main() {
       report: 'BIR11OsPrawna',
     })
   )
-}
-
-main()
+})()

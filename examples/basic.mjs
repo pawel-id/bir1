@@ -1,4 +1,4 @@
-import Bir from './dist/index.js'
+import Bir from '../dist/index.js'
 
 const bir = new Bir({ key: process.env.KEY })
 await bir.login()
