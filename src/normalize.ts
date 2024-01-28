@@ -42,16 +42,20 @@ export function lowerCamelCase(name: string) {
   return camelCaseWords.join('')
 }
 
-export function replaceEmptyValue(key: string, value: any) {
-  if (value === '') {
-    return { key, value: undefined }
+export function replaceEmptyValue(replacer: any) {
+  return (key: string, value: any) => {
+    if (value === '') {
+      return { key, value: replacer }
+    }
   }
 }
 
-export function lowerFirstLetterKey(key: string, value: any) {
-  const newKey = lowerFirstLetter(key)
-  if (newKey !== key) {
-    return { key: newKey, value }
+export function lowerFirstLetterKey() {
+  return (key: string, value: any) => {
+    const newKey = lowerFirstLetter(key)
+    if (newKey !== key) {
+      return { key: newKey, value }
+    }
   }
 }
 
@@ -65,7 +69,7 @@ export function stripPrefixKey(prefix: string | string[]) {
 }
 
 /**
- * Traverse object recursively and apply provided functions `fns`to each 
+ * Traverse object recursively and apply provided functions `fns` to each
  * key-value pair. Functions can modify key and value or return undefined to
  * skip processing. Object is mutated in place.
  * @param obj object to traverse
