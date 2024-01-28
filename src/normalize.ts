@@ -41,3 +41,61 @@ export function lowerCamelCase(name: string) {
 
   return camelCaseWords.join('')
 }
+
+export function replaceEmptyValue(key: string, value: any) {
+  if (value === '') {
+    return { key, value: undefined }
+  }
+}
+
+export function lowerFirstLetterKey(key: string, value: any) {
+  const newKey = lowerFirstLetter(key)
+  if (newKey !== key) {
+    return { key: newKey, value }
+  }
+}
+
+export function stripPrefixKey(prefix: string | string[]) {
+  return (key: string, value: any) => {
+    const newKey = stripPrefix(key, prefix)
+    if (newKey !== key) {
+      return { key: newKey, value }
+    }
+  }
+}
+
+/**
+ * Traverse object recursively and apply provided functions `fns`to each 
+ * key-value pair. Functions can modify key and value or return undefined to
+ * skip processing. Object is mutated in place.
+ * @param obj object to traverse
+ * @param fns functions to apply
+ */
+export function traverse(
+  obj: any,
+  fns: ((key: string, value: any) => { key: string; value: any } | undefined)[]
+) {
+  for (let [key, value] of Object.entries(obj)) {
+    if (typeof value === 'object') {
+      traverse(value, fns)
+    } else {
+      let newKey = key,
+        newValue = value
+      for (let fn of fns) {
+        const updated = fn(newKey, newValue)
+        if (updated) {
+          newKey = updated.key
+          newValue = updated.value
+        }
+      }
+      if (newKey !== key) {
+        delete obj[key]
+        obj[newKey] = newValue
+      } else {
+        if (newValue !== value) {
+          obj[key] = newValue
+        }
+      }
+    }
+  }
+}
