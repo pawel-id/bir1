@@ -51,8 +51,7 @@ export default class Bir {
       key?: string
 
       /**
-       * Function to normalize the response object i.e. to mutate response
-       * to a more convenient format.
+       * Function to modify response to a more convenient format.
        */
       normalizeFn?: (obj: any) => any
     } = {}
