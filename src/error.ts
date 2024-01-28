@@ -6,10 +6,10 @@ export class BirError extends Error {
   }
 
   static assert(response: any) {
-    const { errorCode, errorMessageEn, errorMessagePl } = response
-    if (errorCode || errorMessageEn || errorMessagePl) {
+    const { ErrorCode, ErrorMessageEn, ErrorMessagePl } = response
+    if (ErrorCode || ErrorMessageEn || ErrorMessagePl) {
       const message =
-        errorMessageEn || errorMessagePl || `BIR error code ${errorCode}`
+        ErrorMessageEn || ErrorMessagePl || `BIR error code ${ErrorCode}`
       const error = new BirError(message)
       error.response = response
       throw error

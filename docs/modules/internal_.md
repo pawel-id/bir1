@@ -1,13 +1,5 @@
 # Module: \<internal\>
 
-## Classes
-
-- [Xml](../classes/internal_.Xml.md)
-
-## Interfaces
-
-- [ParseOptions](../interfaces/internal_.ParseOptions.md)
-
 ## Type Aliases
 
 ### GetValueOptions
@@ -31,9 +23,3 @@ ___
 Ƭ **DanePobierzRaportZbiorczyOptions**: ``"BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych"`` \| ``"BIR11AktualizowanePodmiotyPrawneOrazDzialalnosciOsFizycznych"`` \| ``"BIR11SkreslonePodmiotyPrawneOrazDzialalnosciOsFizycznych"`` \| ``"BIR11NoweJednostkiLokalne"`` \| ``"BIR11AktualizowaneJednostkiLokalne"`` \| ``"BIR11SkresloneJednostkiLokalne"``
 
 Reports for method `DanePobierzRaportZbiorczy`.
-
-___
-
-### EmptyTag
-
-Ƭ **EmptyTag**: `string` \| ``null`` \| `undefined`

@@ -33,7 +33,6 @@ Create a new Bir instance
 | :------ | :------ | :------ |
 | `options` | `Object` | - |
 | `options.key?` | `string` | API key provided by GUS. |
-| `options.parseOptions?` | [`ParseOptions`](../interfaces/internal_.ParseOptions.md) | Additional parse options for XML parser |
 
 #### Returns
 

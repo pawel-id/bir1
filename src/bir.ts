@@ -1,7 +1,7 @@
 import assert from 'assert'
 import got, { Got } from 'got'
 import { template } from './template'
-import { Xml, ParseOptions } from './xml'
+import { parse } from './xml'
 import { BirError } from './error'
 import {
   GetValueOptions,
@@ -43,9 +43,7 @@ export default class Bir {
   private key: string
   private sid?: string
   private prod: boolean
-  private parseOptions?: ParseOptions
   private _client?: Got
-  private _xml?: Xml
 
   /**
    * Create a new Bir instance
@@ -63,15 +61,10 @@ export default class Bir {
        */
       key?: string
 
-      /**
-       * Additional parse options for XML parser
-       */
-      parseOptions?: ParseOptions
     } = {}
   ) {
     this.key = options.key || 'abcde12345abcde12345'
     this.prod = options.key ? true : false
-    this.parseOptions = options.parseOptions
   }
 
   private async api(options: any) {
@@ -94,10 +87,7 @@ export default class Bir {
    * @returns parsed object
    */
   private extract(result: string) {
-    if (!this._xml) {
-      this._xml = new Xml(this.parseOptions)
-    }
-    let resultObject = this._xml.parse(result)
+    let resultObject = parse(result)
     resultObject = resultObject['root']['dane']
     BirError.assert(resultObject)
     return resultObject
