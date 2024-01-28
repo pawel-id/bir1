@@ -1,18 +1,13 @@
 import assert from 'assert'
-import got, { Got } from 'got'
 import { template } from './template'
 import { unsoap, parse } from './extract'
+import { query, QueryOptions } from './client'
 import { BirError } from './error'
 import {
   GetValueOptions,
   DanePobierzPelnyRaportOptions,
   DanePobierzRaportZbiorczyOptions,
 } from './types'
-
-const url = {
-  prod: 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
-  test: 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
-}
 
 /**
  * Class Bir provides access to REGON API
@@ -38,7 +33,6 @@ export default class Bir {
   private sid?: string
   private prod: boolean
   private _normalizeFn?: (obj: any) => any
-  private _client?: Got
 
   /**
    * Create a new Bir instance
@@ -75,17 +69,11 @@ export default class Bir {
     return obj
   }
 
-  private async api(options: any) {
-    if (!this._client) {
-      this._client = got.extend({
-        method: 'POST',
-        prefixUrl: this.prod ? url.prod : url.test,
-        headers: {
-          'Content-Type': 'application/soap+xml',
-        },
-      })
+  private async api(options: QueryOptions) {
+    if (this.sid) {
+      options.headers = { ...options.headers, sid: this.sid }
     }
-    return this._client(options)
+    return query(this.prod, options)
   }
 
   /**
@@ -99,7 +87,7 @@ export default class Bir {
     assert(this.key, new BirError('No api key provided'))
     const body = await template('Zaloguj', { key: this.key })
     const response = await this.api({ body })
-    const sid = unsoap(response.body)
+    const sid = unsoap(response)
     assert(sid, new BirError('Login failed, no session found in response'))
     this.sid = sid
   }
@@ -110,8 +98,8 @@ export default class Bir {
    */
   async value(value: GetValueOptions) {
     const body = await template('GetValue', { value })
-    const response = await this.api({ headers: { sid: this.sid }, body })
-    return unsoap(response.body)
+    const response = await this.api({ body })
+    return unsoap(response)
   }
 
   /**
@@ -126,8 +114,8 @@ export default class Bir {
    */
   async search(query: { nip: string } | { regon: string } | { krs: string }) {
     const body = await template('DaneSzukajPodmioty', query)
-    const response = await this.api({ headers: { sid: this.sid }, body })
-    return this.normalize(parse(unsoap(response.body)))
+    const response = await this.api({ body })
+    return this.normalize(parse(unsoap(response)))
   }
 
   /**
@@ -140,8 +128,8 @@ export default class Bir {
     report: DanePobierzPelnyRaportOptions
   }) {
     const body = await template('DanePobierzPelnyRaport', query)
-    const response = await this.api({ headers: { sid: this.sid }, body })
-    return this.normalize(parse(unsoap(response.body)))
+    const response = await this.api({ body })
+    return this.normalize(parse(unsoap(response)))
   }
 
   /**
@@ -154,8 +142,8 @@ export default class Bir {
     report: DanePobierzRaportZbiorczyOptions
   }) {
     const body = await template('DanePobierzRaportZbiorczy', query)
-    const response = await this.api({ headers: { sid: this.sid }, body })
-    return this.normalize(parse(unsoap(response.body)))
+    const response = await this.api({ body })
+    return this.normalize(parse(unsoap(response)))
   }
 
   /**
@@ -164,6 +152,6 @@ export default class Bir {
   async logout() {
     const body = await template('Wyloguj', { sid: this.sid })
     const response = await this.api({ body })
-    unsoap(response.body)
+    unsoap(response)
   }
 }
