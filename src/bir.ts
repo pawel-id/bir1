@@ -1,13 +1,13 @@
 import assert from 'assert'
 import got, { Got } from 'got'
-import { template } from './template.js'
-import { Xml, ParseOptions } from './xml.js'
-import { BirError } from './error.js'
+import { template } from './template'
+import { Xml, ParseOptions } from './xml'
+import { BirError } from './error'
 import {
   GetValueOptions,
   DanePobierzPelnyRaportOptions,
   DanePobierzRaportZbiorczyOptions,
-} from './types.js'
+} from './types'
 
 const url = {
   prod: 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',

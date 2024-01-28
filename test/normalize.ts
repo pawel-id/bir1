@@ -3,7 +3,7 @@ import {
   lowerFirstLetter,
   stripPrefix,
   lowerCamelCase,
-} from '../src/normalize.js'
+} from '../src/normalize'
 
 t.test('lowerFirstLetter', (t) => {
   t.equal(

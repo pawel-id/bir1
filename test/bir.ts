@@ -1,6 +1,6 @@
 import t from 'tap'
-import Bir from '../src/index.js'
-import { legacyParseOptions } from '../src/xml.js'
+import Bir from '../src/index'
+import { legacyParseOptions } from '../src/xml'
 
 const options = { parseOptions: legacyParseOptions } 
 

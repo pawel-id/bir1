@@ -1,6 +1,6 @@
 import { decodeXML } from 'entities'
 import { XMLParser, X2jOptions } from 'fast-xml-parser'
-import { lowerFirstLetter, stripPrefix } from './normalize.js'
+import { lowerFirstLetter, stripPrefix } from './normalize'
 
 export type EmptyTag = string | null | undefined
 export type XmlOptions = Partial<X2jOptions>
