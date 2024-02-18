@@ -1,7 +1,7 @@
 /**
  * Lower first letter of the string.
  */
-export function lowerFirstLetter(name: string) {
+function _lowerFirstLetter(name: string) {
   if (name.length === 0) return name
   return name[0].toLowerCase() + name.slice(1)
 }
@@ -9,7 +9,7 @@ export function lowerFirstLetter(name: string) {
 /**
  * Strip `prefix` from the `name` string.
  */
-export function stripPrefix(name: string, prefix: string | string[]) {
+function _stripPrefix(name: string, prefix: string | string[]) {
   if (typeof prefix === 'string') prefix = [prefix]
   for (let p of prefix) {
     if (name.startsWith(p)) {
@@ -28,7 +28,7 @@ export function stripPrefix(name: string, prefix: string | string[]) {
  * results different from proper implementation.
  * However it is stable and faster and sufficient for our use case.
  */
-export function lowerCamelCase(name: string) {
+function _lowerCamelCase(name: string) {
   const words = name.split(/[^a-zA-Z0-9]/)
 
   const camelCaseWords = words.map((word, index) => {
@@ -42,6 +42,15 @@ export function lowerCamelCase(name: string) {
   return camelCaseWords.join('')
 }
 
+export function lowerCamelCaseKey() {
+  return (key: string, value: any) => {
+    const newKey = _lowerCamelCase(key)
+    if (newKey !== key) {
+      return { key: newKey, value }
+    }
+  }
+}
+
 export function replaceEmptyValue(replacer: any) {
   return (key: string, value: any) => {
     if (value === '') {
@@ -52,7 +61,7 @@ export function replaceEmptyValue(replacer: any) {
 
 export function lowerFirstLetterKey() {
   return (key: string, value: any) => {
-    const newKey = lowerFirstLetter(key)
+    const newKey = _lowerFirstLetter(key)
     if (newKey !== key) {
       return { key: newKey, value }
     }
@@ -61,7 +70,7 @@ export function lowerFirstLetterKey() {
 
 export function stripPrefixKey(prefix: string | string[]) {
   return (key: string, value: any) => {
-    const newKey = stripPrefix(key, prefix)
+    const newKey = _stripPrefix(key, prefix)
     if (newKey !== key) {
       return { key: newKey, value }
     }
@@ -71,7 +80,7 @@ export function stripPrefixKey(prefix: string | string[]) {
 /**
  * Traverse object recursively and apply provided functions `fns` to each
  * key-value pair. Functions can modify key and value or return undefined to
- * skip processing. Object is mutated in place.
+ * do nothing. Object is mutated in place.
  * @param obj object to traverse
  * @param fns functions to apply
  */
@@ -102,4 +111,17 @@ export function traverse(
       }
     }
   }
+}
+
+/**
+ * Provides compatibility with legacy version of the API.
+ * @param obj object to normalize
+ * @deprecated
+ */
+export function legacy(obj: any) {
+  traverse(obj, [
+    stripPrefixKey('praw_'),
+    lowerFirstLetterKey(),
+    replaceEmptyValue(undefined),
+  ])
 }

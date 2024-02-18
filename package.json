@@ -12,9 +12,20 @@
   "license": "MIT",
   "author": "Paweł Idczak <pawel.idczak@gmail.com>",
   "type": "commonjs",
-  "exports": "./dist/index.js",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./normalize": {
+      "types": "./dist/normalize.d.ts",
+      "default": "./dist/normalize.js"
+    },
+    "./normalize.js": {
+      "types": "./dist/normalize.d.ts",
+      "default": "./dist/normalize.js"
+    }
+  },
   "files": [
     "dist"
   ],
@@ -31,6 +42,7 @@
   "devDependencies": {
     "@types/node": "^20.10.5",
     "@types/xml2js": "^0.4.14",
+    "bir1-legacy": "npm:bir1@^2",
     "dotenv": "^16.3.1",
     "rimraf": "^5.0.5",
     "tap": "^18.7.0",
