@@ -93,7 +93,7 @@ export default class Bir {
   /**
    * Automatically login to the API if not already logged in
    */
-  async autologin() {
+  private async autologin() {
     if (!this.sid) {
       await this.login()
     }
