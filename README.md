@@ -21,7 +21,6 @@ npm install bir1
 import Bir from 'bir1'
 
 const bir = new Bir()
-await bir.login()
 console.log(await bir.search({ nip: '5261040567' }))
 // output:
 // {

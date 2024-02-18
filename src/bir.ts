@@ -16,7 +16,6 @@ import {
  * ```js
  *   import Bir from 'bir1'
  *   const bir = new Bir()
- *   await bir.login()
  *   console.log(await bir.search({ nip: '5261040567' }))
  *   // output:
  *   // {
@@ -92,10 +91,20 @@ export default class Bir {
   }
 
   /**
+   * Automatically login to the API if not already logged in
+   */
+  async autologin() {
+    if (!this.sid) {
+      await this.login()
+    }
+  }
+
+  /**
    * Get diagnostic information (method: GetValue)
    * @param value value to retrieve
    */
   async value(value: GetValueOptions) {
+    await this.autologin()
     const body = await template('GetValue', { value })
     const response = await this.api({ body })
     return unsoap(response)
@@ -112,6 +121,7 @@ export default class Bir {
    * Only one of the query parameters can be used at a time.
    */
   async search(query: { nip: string } | { regon: string } | { krs: string }) {
+    await this.autologin()
     const body = await template('DaneSzukajPodmioty', query)
     const response = await this.api({ body })
     return this.normalize(parse(unsoap(response)))
@@ -126,6 +136,7 @@ export default class Bir {
     regon: string
     report: DanePobierzPelnyRaportOptions
   }) {
+    await this.autologin()
     const body = await template('DanePobierzPelnyRaport', query)
     const response = await this.api({ body })
     return this.normalize(parse(unsoap(response)))
@@ -140,6 +151,7 @@ export default class Bir {
     date: string
     report: DanePobierzRaportZbiorczyOptions
   }) {
+    await this.autologin()
     const body = await template('DanePobierzRaportZbiorczy', query)
     const response = await this.api({ body })
     return this.normalize(parse(unsoap(response)))
