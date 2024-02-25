@@ -114,7 +114,15 @@ export function traverse(
 }
 
 /**
- * Provides compatibility with legacy version of the API.
+ * Provides compatibility with legacy version of the API. This function:
+ *  - removes 'praw_' prefix from keys
+ *  - lower first letter of keys
+ *  - replaces empty strings with `undefined`
+ *
+ * Note: GUS API returns more prefixed keys than 'praw_'. Removing only this
+ * prefix was initial partial implementation. This approach is deprecated
+ * and left only for compatibility with legacy code.
+ *
  * @param obj object to normalize
  * @deprecated
  */
