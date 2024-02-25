@@ -20,10 +20,6 @@
     "./normalize": {
       "types": "./dist/normalize.d.ts",
       "default": "./dist/normalize.js"
-    },
-    "./normalize.js": {
-      "types": "./dist/normalize.d.ts",
-      "default": "./dist/normalize.js"
     }
   },
   "files": [
