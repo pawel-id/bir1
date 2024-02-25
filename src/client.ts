@@ -12,6 +12,7 @@ export type QueryOptions = {
 
 export async function query(prod: boolean, options: QueryOptions) {
   const { headers, ...rest } = options
+  // @ts-ignore
   const { body } = await got.post(prod ? url.prod : url.test, {
     headers: {
       'Content-Type': 'application/soap+xml',

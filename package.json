@@ -11,7 +11,7 @@
   "repository": "pawel-id/bir1",
   "license": "MIT",
   "author": "Paweł Idczak <pawel.idczak@gmail.com>",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

@@ -1,4 +1,4 @@
-import * as allTemplates from './templates'
+import * as allTemplates from './templates/index.js'
 
 export async function template(
   name: keyof typeof allTemplates,

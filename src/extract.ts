@@ -1,7 +1,7 @@
 import assert from 'assert'
 import { decodeXML } from 'entities'
 import { XMLParser } from 'fast-xml-parser'
-import { BirError } from './error'
+import { BirError } from './error.js'
 
 export function unsoap(string: string) {
   const match = /<\S+Result>(.+)<\/\S+Result>/s.exec(string)
