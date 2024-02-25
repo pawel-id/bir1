@@ -78,8 +78,9 @@ export default class Bir {
    * Login to the API (method: Zaloguj)
    *
    * @remarks
-   * This method must be called before any other method. It is not called
-   * automatically to allow for more control over the login process.
+   * This method must be called before any other method. It is called
+   * automatically before other methods if the session id (`sid`) is
+   * `undefined`.
    */
   async login() {
     assert(this.key, new BirError('No api key provided'))
