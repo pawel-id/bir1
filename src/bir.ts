@@ -86,7 +86,7 @@ export default class Bir {
     const body = template.Zaloguj({ key: this.key })
     const response = await this.api({ body })
     const sid = unsoap(response)
-    assert(sid, new BirError('Login failed, no session found in response'))
+    assert(sid, new BirError('Login failed, no session found'))
     this.sid = sid
   }
 

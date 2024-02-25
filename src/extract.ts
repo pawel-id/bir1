@@ -5,7 +5,7 @@ import { BirError } from './error.js'
 
 export function unsoap(string: string) {
   const match = /<\S+Result>(.+)<\/\S+Result>/s.exec(string)
-  assert(match?.[1], new BirError('SOAP Result empty or not found in response'))
+  assert(match?.[1], new BirError('Empty response'))
   return match[1]
 }
 
