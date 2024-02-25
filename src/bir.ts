@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { template } from './template.js'
+import * as template from './templates/index.js'
 import { unsoap, parse } from './extract.js'
 import { query, QueryOptions } from './client.js'
 import { BirError } from './error.js'
@@ -83,7 +83,7 @@ export default class Bir {
    */
   async login() {
     assert(this.key, new BirError('No api key provided'))
-    const body = await template('Zaloguj', { key: this.key })
+    const body = template.Zaloguj({ key: this.key })
     const response = await this.api({ body })
     const sid = unsoap(response)
     assert(sid, new BirError('Login failed, no session found in response'))
@@ -105,7 +105,7 @@ export default class Bir {
    */
   async value(value: GetValueOptions) {
     await this.autologin()
-    const body = await template('GetValue', { value })
+    const body = template.GetValue({ value })
     const response = await this.api({ body })
     return unsoap(response)
   }
@@ -122,7 +122,7 @@ export default class Bir {
    */
   async search(query: { nip: string } | { regon: string } | { krs: string }) {
     await this.autologin()
-    const body = await template('DaneSzukajPodmioty', query)
+    const body = template.DaneSzukajPodmioty(query)
     const response = await this.api({ body })
     return this.normalize(parse(unsoap(response)))
   }
@@ -137,7 +137,7 @@ export default class Bir {
     report: DanePobierzPelnyRaportOptions
   }) {
     await this.autologin()
-    const body = await template('DanePobierzPelnyRaport', query)
+    const body = template.DanePobierzPelnyRaport(query)
     const response = await this.api({ body })
     return this.normalize(parse(unsoap(response)))
   }
@@ -152,7 +152,7 @@ export default class Bir {
     report: DanePobierzRaportZbiorczyOptions
   }) {
     await this.autologin()
-    const body = await template('DanePobierzRaportZbiorczy', query)
+    const body = template.DanePobierzRaportZbiorczy(query)
     const response = await this.api({ body })
     return this.normalize(parse(unsoap(response)))
   }
@@ -161,7 +161,8 @@ export default class Bir {
    * Logout (method: Wyloguj)
    */
   async logout() {
-    const body = await template('Wyloguj', { sid: this.sid })
+    if (!this.sid) return
+    const body = template.Wyloguj({ sid: this.sid })
     const response = await this.api({ body })
     unsoap(response)
   }
