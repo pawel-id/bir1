@@ -7,7 +7,8 @@ returns data in JSON format. Supports all BIR 1.0 and 1.1 API methods.
 BIR1 (polish: "Baza Internetowa REGON") is an internal name of the API service
 (hence our package name).
 
-It is written in TypeScript and provides type definitions.
+Implementation follows best practices of modern node.js. It is ESM module
+written in TypeScript with carefully crafted type definitions. Enjoy!
 
 ## Install
 
@@ -24,15 +25,15 @@ const bir = new Bir()
 console.log(await bir.search({ nip: '5261040567' }))
 // output:
 // {
-//   regon: '011417295',
-//   nip: '5261040567',
-//   statusNip: '',
-//   nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA',
-//   wojewodztwo: 'MAZOWIECKIE',
-//   powiat: 'Warszawa',
-//   gmina: 'Mokotów',
-//   miejscowosc: 'Warszawa',
-//   kodPocztowy: '02-674',
+// Regon: '012100784',
+// Nip: '5260250995',
+// StatusNip: '',
+// Nazwa: 'ORANGE POLSKA SPÓŁKA AKCYJNA',
+// Wojewodztwo: 'MAZOWIECKIE',
+// Powiat: 'm. st. Warszawa',
+// Gmina: 'Ochota',
+// Miejscowosc: 'Warszawa',
+// KodPocztowy: '02-326',
 //   ...
 // }
 ```
