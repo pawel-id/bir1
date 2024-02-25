@@ -4,14 +4,20 @@ Simple node.js client library to provide information about authorized government
 administration authorities, regional authorities, government institutions and to
 commercial entities. It connects to
 [REGON service](https://api.stat.gov.pl/Home/RegonApi?lang=en) and returns data
-in JSON format. Supports all BIR 1.0 and 1.1 API methods. Please refer to
-provided documentation for more details.
+in JSON format. Supports all BIR 1.0 and 1.1 API methods. Please refer to link
+above to find documentation for more details.
 
 BIR1 (polish: "Baza Internetowa REGON") is an internal name of the API service
 (hence our package name).
 
 Implementation follows best practices of modern node.js. It is ESM module
 written in TypeScript with carefully crafted type definitions. Enjoy!
+
+Data returned data from SOAP messages are parsed to JSON. By default the
+following rules apply:
+
+- keys are left intact (it is mixed snake_case and camelCase)
+- values are converted to strings. Empty values are left as empty strings
 
 ## Install
 
