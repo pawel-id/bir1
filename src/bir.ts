@@ -77,9 +77,12 @@ export default class Bir {
   /**
    * Login to the API (method: Zaloguj)
    *
+   * After successful login, the session id (`sid`) is stored in the
+   * instance and used in subsequent requests.
+   *
    * @remarks
    * This method must be called before any other method. It is called
-   * automatically before other methods if the session id (`sid`) is
+   * automatically before other requests if the session id (`sid`) is
    * `undefined`.
    */
   async login() {
@@ -92,7 +95,7 @@ export default class Bir {
   }
 
   /**
-   * Automatically login to the API if not already logged in
+   * Automatically login to the API if not already logged in.
    */
   private async autologin() {
     if (!this.sid) {
