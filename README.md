@@ -183,13 +183,13 @@ parameters:
 
 Logout (method: Wyloguj)
 
-## Migrating from version 1.x, 2.x to 3.x
+## Migrating from version 2.x to 3.x
 
 Please note that starting from version 3.0 of that library the following
 breaking changes were introduced:
 
-1. the module is now pure ESM module (previously CJS)
-2. the keys and values are returned as is (previously they were processed)
+1. the library is now pure ESM module (previously CJS)
+2. the keys and values are returned 'as is' (previously they were processed)
 
    - the keys are left intact (previously they were lowercased and a bit
      trimmed)
