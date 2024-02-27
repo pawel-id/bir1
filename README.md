@@ -60,12 +60,16 @@ Create a new Bir instance.
 
 ##### Parameters
 
+- `options?: Object` - options object
 - `options.key?: string` - API key. If this is not provided, the internally
   stored public API key is used to access non-production GUS database. It allows
   quick start, however non-production database contains old and anonymized data.
   Providing GUS provided key connects to the production database.
 - `options.normalizeFn?: (obj: any) => any` Function to modify response to a
-  more convenient format
+  more convenient format. Every JSON object extracted from SOAP message is
+  passed to this function. It should return modified object. E.g. it is possible
+  provide a function to to convert keys to camelCase or convert some values to
+  numbers.
 
 #### Methods
 
