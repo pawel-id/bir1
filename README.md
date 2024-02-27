@@ -27,7 +27,7 @@ npm install bir1
 
 ## Quick start
 
-```javascript
+```js
 import Bir from 'bir1'
 
 const bir = new Bir()
@@ -49,80 +49,145 @@ console.log(await bir.search({ nip: '5261040567' }))
 
 ## API
 
-### constructor
+### Class: Bir
 
-• **new Bir**(`options?`)
+Class Bir provides access to REGON API
 
-#### Parameters
+#### Constructor
 
-| Name           | Type     | Notes              |
-| -------------- | -------- | ------------------ |
-| `options`      | `Object` |                    |
-| `options.key?` | `string` | production API key |
+`new Bir(options?): Bir`
 
-Note: by default it connects to non production GUS database using public default
-key. In order to connect to production database with current company data
-provide a key granted by GUS.
+Create a new Bir instance.
 
-### login
+##### Parameters
 
-▸ **login**(): `Promise`<void\>
+- `options.key?: string` - API key. If this is not provided, the internally
+  stored public API key is used to access non-production GUS database. It allows
+  quick start, however non-production database contains old and anonymized data.
+  Providing GUS provided key connects to the production database.
+- `options.normalizeFn?: (obj: any) => any` Function to modify response to a
+  more convenient format
 
-#### Returns
+#### Methods
 
-`Promise`<void\>
+##### login
 
----
+`login(): Promise<void>`
 
-### search
+Login to the API (method: Zaloguj)
 
-▸ **search**(`query`): `Promise`<any\>
+This method uses the key provided in the constructor to login to the API. After
+successful login, the session id (`sid`) is stored in class instance and used in
+subsequent requests.
 
-#### Parameters
-
-| Name           | Type     | Notes |
-| -------------- | -------- | ----- |
-| `query`        | `Object` |       |
-| `query.nip?`   | `string` |       |
-| `query.regon?` | `string` |       |
-| `query.krs?`   | `string` |       |
-
-#### Returns
-
-`Promise`<any\>
+Starting from version 3.0 calling this method is optional as it is called
+automatically.
 
 ---
 
-### report
+##### value
 
-▸ **report**(`query`): `Promise`<any\>
+`value(value): Promise<string>`
 
-#### Parameters
+Get diagnostic information (method: GetValue)
 
-| Name           | Type     | Notes                 |
-| -------------- | -------- | --------------------- |
-| `query`        | `Object` |                       |
-| `query.regon`  | `string` |                       |
-| `query.report` | `string` | e.g.: `BIR11OsPrawna` |
+###### Parameters
 
-See BIR1 original documentation for more report types.
-
-#### Returns
-
-`Promise`<any\>
+- `value` - value to retrieve. One of:
+  - `StanDanych`
+  - `KomunikatKod`
+  - `KomunikatTresc`
+  - `StatusSesji`
+  - `StatusUslugi`
+  - `KomunikatUslugi`
 
 ---
 
-### value
+##### search
 
-▸ **value**(`value`): `Promise`<string\>
+`search(query): Promise<any>`
 
-#### Parameters
+Search (method: DaneSzukajPodmioty). Returns basic information about entity.
 
-| Name    | Type     |
-| ------- | -------- |
-| `value` | `string` |
+###### Parameters
 
-#### Returns
+- `query: Object` - search query param. One of:
+  - `query.nip: string` - NIP number
+  - `query.regon: string` - REGON number
+  - `query.krs: string` - KRS number
 
-`Promise`<string\>
+---
+
+##### report
+
+`report(query): Promise<any>`
+
+Retrive report (method: DanePobierzPelnyRaport). Returns more detailed
+information about entity depending on report type.
+
+###### Parameters
+
+- `query: Object`
+- `query.regon: string` - REGON number
+- `query.report` - report name. One of:
+  - `PublDaneRaportFizycznaOsoba`
+  - `PublDaneRaportDzialalnoscFizycznejCeidg`
+  - `PublDaneRaportDzialalnoscFizycznejRolnicza`
+  - `PublDaneRaportDzialalnoscFizycznejPozostala`
+  - `PublDaneRaportDzialalnoscFizycznejWKrupgn`
+  - `PublDaneRaportDzialalnosciFizycznej`
+  - `PublDaneRaportLokalneFizycznej`
+  - `PublDaneRaportLokalnaFizycznej`
+  - `PublDaneRaportDzialalnosciLokalnejFizycznej`
+  - `PublDaneRaportPrawna`
+  - `PublDaneRaportDzialalnosciPrawnej`
+  - `PublDaneRaportLokalnePrawnej`
+  - `PublDaneRaportLokalnaPrawnej`
+  - `PublDaneRaportDzialalnosciLokalnejPrawnej`
+  - `PublDaneRaportWspolnicyPrawnej`
+  - `PublDaneRaportTypJednostki`
+  - `BIR11OsFizycznaDaneOgolne`
+  - `BIR11OsFizycznaDzialalnoscCeidg`
+  - `BIR11OsFizycznaDzialalnoscRolnicza`
+  - `BIR11OsFizycznaDzialalnoscPozostala`
+  - `BIR11OsFizycznaDzialalnoscSkreslonaDo20141108`
+  - `BIR11OsFizycznaPkd`
+  - `BIR11OsFizycznaListaJednLokalnych`
+  - `BIR11JednLokalnaOsFizycznej`
+  - `BIR11JednLokalnaOsFizycznejPkd`
+  - `BIR11OsPrawna`
+  - `BIR11OsPrawnaPkd`
+  - `BIR11OsPrawnaListaJednLokalnych`
+  - `BIR11JednLokalnaOsPrawnej`
+  - `BIR11JednLokalnaOsPrawnejPkd`
+  - `BIR11OsPrawnaSpCywilnaWspolnicy`
+  - `BIR11TypPodmiotu`
+
+---
+
+##### summary
+
+`summary(query): Promise<any>`
+
+Retrive summary report (method: DanePobierzRaportZbiorczy). Returns summary of
+changes in database.
+
+###### Parameters
+
+- `query: Object`
+- `query.date: string` - date in format YYYY-MM-DD not earlier than week before
+- `query.report` - report name. One of:
+  - `BIR11NowePodmiotyPrawneOrazDzialalnosciOsFizycznych`
+  - `BIR11AktualizowanePodmiotyPrawneOrazDzialalnosciOsFizycznych`
+  - `BIR11SkreslonePodmiotyPrawneOrazDzialalnosciOsFizycznych`
+  - `BIR11NoweJednostkiLokalne`
+  - `BIR11AktualizowaneJednostkiLokalne`
+  - `BIR11SkresloneJednostkiLokalne`
+
+---
+
+##### logout
+
+`logout(): Promise<void>`
+
+Logout (method: Wyloguj)
