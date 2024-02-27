@@ -26,7 +26,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rimraf docs dist && typedoc && tsc",
+    "docs": "rimraf docs && typedoc",
+    "build": "rimraf dist && tsc",
     "dev": "tsc -w",
     "test": "tap"
   },
