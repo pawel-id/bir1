@@ -69,8 +69,6 @@ Create a new Bir instance.
 
 #### Methods
 
-##### login
-
 `login(): Promise<void>`
 
 Login to the API (method: Zaloguj)
@@ -84,13 +82,11 @@ automatically.
 
 ---
 
-##### value
-
 `value(value): Promise<string>`
 
 Get diagnostic information (method: GetValue)
 
-###### Parameters
+##### Parameters
 
 - `value` - value to retrieve. One of:
   - `StanDanych`
@@ -102,13 +98,11 @@ Get diagnostic information (method: GetValue)
 
 ---
 
-##### search
-
 `search(query): Promise<any>`
 
 Search (method: DaneSzukajPodmioty). Returns basic information about entity.
 
-###### Parameters
+##### Parameters
 
 - `query: Object` - search query param. One of:
   - `query.nip: string` - NIP number
@@ -117,14 +111,12 @@ Search (method: DaneSzukajPodmioty). Returns basic information about entity.
 
 ---
 
-##### report
-
 `report(query): Promise<any>`
 
 Retrive report (method: DanePobierzPelnyRaport). Returns more detailed
 information about entity depending on report type.
 
-###### Parameters
+##### Parameters
 
 - `query: Object`
 - `query.regon: string` - REGON number
@@ -164,14 +156,12 @@ information about entity depending on report type.
 
 ---
 
-##### summary
-
 `summary(query): Promise<any>`
 
 Retrive summary report (method: DanePobierzRaportZbiorczy). Returns summary of
 changes in database.
 
-###### Parameters
+##### Parameters
 
 - `query: Object`
 - `query.date: string` - date in format YYYY-MM-DD not earlier than week before
@@ -184,8 +174,6 @@ changes in database.
   - `BIR11SkresloneJednostkiLokalne`
 
 ---
-
-##### logout
 
 `logout(): Promise<void>`
 
