@@ -1,9 +1,11 @@
 import Bir from 'bir1'
 
-// In order to get up to date data from production environment, you need to 
-// provide your own key. Ask for it at https://api.stat.gov.pl/Home/RegonApi
-// This sample will work also without that key, but it will return old
-// non-updated data.
+/**
+ * In order to get up to date data from production environment, you need to
+ * provide your own key. Ask for it at https://api.stat.gov.pl/Home/RegonApi
+ * This sample will work also without that key, but it will return old
+ * non-updated data.
+ */
 
 const bir = new Bir({ key: process.env.KEY })
 console.log('StanDanych: ', await bir.value('StanDanych'))

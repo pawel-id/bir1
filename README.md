@@ -182,3 +182,20 @@ changes in database.
 `logout(): Promise<void>`
 
 Logout (method: Wyloguj)
+
+## Migrating from version 1.x, 2.x to 3.x
+
+Please note that starting from version 3.0 of that library the following
+breaking changes were introduced:
+
+1. the module is now pure ESM module (previously CJS)
+2. the keys and values are returned as is (previously they were processed)
+
+   - the keys are left intact (previously they were lowercased and a bit
+     trimmed)
+   - the empty values are now returned as empty strings (previously they were
+     returned as `undefined`)
+
+   See further details in the source code of [legacy](src/normalize.ts)
+   normalize function. This function can be used to preserve the old behavior as
+   shown in the [example](examples/legacy.js).
