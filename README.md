@@ -47,6 +47,8 @@ console.log(await bir.search({ nip: '5261040567' }))
 // }
 ```
 
+see more examples in [examples](./examples) directory
+
 ## API
 
 ### Class: Bir
