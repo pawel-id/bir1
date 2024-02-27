@@ -58,7 +58,7 @@ Class Bir provides access to REGON API
 
 Create a new Bir instance.
 
-##### Parameters
+parameters:
 
 - `options?: Object` - options object
 - `options.key?: string` - API key. If this is not provided, the internally
@@ -90,7 +90,7 @@ automatically.
 
 Get diagnostic information (method: GetValue)
 
-##### Parameters
+parameters:
 
 - `value` - value to retrieve. One of:
   - `StanDanych`
@@ -106,7 +106,7 @@ Get diagnostic information (method: GetValue)
 
 Search (method: DaneSzukajPodmioty). Returns basic information about entity.
 
-##### Parameters
+parameters:
 
 - `query: Object` - search query param. One of:
   - `query.nip: string` - NIP number
@@ -120,7 +120,7 @@ Search (method: DaneSzukajPodmioty). Returns basic information about entity.
 Retrive report (method: DanePobierzPelnyRaport). Returns more detailed
 information about entity depending on report type.
 
-##### Parameters
+parameters:
 
 - `query: Object`
 - `query.regon: string` - REGON number
@@ -165,7 +165,7 @@ information about entity depending on report type.
 Retrive summary report (method: DanePobierzRaportZbiorczy). Returns summary of
 changes in database.
 
-##### Parameters
+parameters:
 
 - `query: Object`
 - `query.date: string` - date in format YYYY-MM-DD not earlier than week before
