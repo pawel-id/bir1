@@ -7,7 +7,7 @@ commercial entities. It connects to
 in JSON format. Data returned from original SOAP messages are parsed to JSON. By
 default the following rules apply:
 
-- the structure of the original SOAP message is preserved (see details in
+- the structure of the original SOAP messages are preserved (see details in
   [documentation](https://api.stat.gov.pl/Content/files/regon/GUS-Regon-UslugaBIR11-dokumentacja_v1.32.zip))
 - keys are left intact (GUS use mix of snake_case and camelCase)
 - values are converted to strings. Empty values are left as empty strings
