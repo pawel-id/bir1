@@ -4,16 +4,18 @@ Simple node.js client library to provide information about authorized government
 administration authorities, regional authorities, government institutions and to
 commercial entities. It connects to
 [REGON service](https://api.stat.gov.pl/Home/RegonApi?lang=en) and returns data
-in JSON format. Data returned data from SOAP messages are parsed to JSON. By
+in JSON format. Data returned from original SOAP messages are parsed to JSON. By
 default the following rules apply:
 
+- the structure of the original SOAP message is preserved (see details in
+  [documentation](https://api.stat.gov.pl/Content/files/regon/GUS-Regon-UslugaBIR11-dokumentacja_v1.32.zip))
 - keys are left intact (GUS use mix of snake_case and camelCase)
 - values are converted to strings. Empty values are left as empty strings
 
 Why BIR1 was choosen as package name? BIR1 (polish: "Baza Internetowa REGON") is
 an internal name of the API service maintained by GUS.
 
-Implementation follows best practices of modern node.js. It is ESM module
+Implementation follows good practices of modern node.js. It is ESM module
 written in TypeScript with carefully crafted type definitions. Enjoy!
 
 ## Install
@@ -113,6 +115,15 @@ parameters:
   - `query.regon: string` - REGON number
   - `query.krs: string` - KRS number
 
+example:
+
+```js
+import Bir from 'bir1'
+
+const bir = new Bir()
+console.log(await bir.search({ nip: '5261040567' }))
+```
+
 ---
 
 `report(query): Promise<any>`
@@ -157,6 +168,17 @@ parameters:
   - `BIR11JednLokalnaOsPrawnejPkd`
   - `BIR11OsPrawnaSpCywilnaWspolnicy`
   - `BIR11TypPodmiotu`
+
+example:
+
+```js
+import Bir from 'bir1'
+
+const bir = new Bir()
+console.log(
+  await bir.report({ regon: '012100784', report: 'PublDaneRaportPrawna' })
+)
+```
 
 ---
 
