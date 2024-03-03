@@ -67,7 +67,7 @@ export function morph(
           if (updated.key !== key) {
             delete obj[key]
             obj[updated.key] = updated.value
-          } else {
+          } else if (updated.value !== value) {
             obj[key] = updated.value
           }
         }
