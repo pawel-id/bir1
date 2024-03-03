@@ -24,7 +24,7 @@ function stripPrefix(name: string, prefix: string | string[]) {
 /**
  * Replace empty string.
  */
-function replaceEmpty(value: any, replacer?: any) {
+function replaceEmpty(value: any, replacer: any) {
   return value === '' ? replacer : value
 }
 
