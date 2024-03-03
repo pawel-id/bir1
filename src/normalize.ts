@@ -95,7 +95,7 @@ function morph(
  * ```js
  * import Bir from 'bir1'
  * import { legacy } from 'bir1/normalize'
- * const bir = new Bir({normalizeFn: legacy})
+ * const bir = new Bir({ normalizeFn: legacy })
  * const result = await bir.search('010058960')
  * ```
  *
@@ -124,7 +124,7 @@ export function legacy(obj: any) {
  * ```js
  * import Bir from 'bir1'
  * import { modern } from 'bir1/normalize'
- * const bir = new Bir({normalizeFn: modern})
+ * const bir = new Bir({ normalizeFn: modern })
  * const result = await bir.search('010058960')
  * ```
  *
