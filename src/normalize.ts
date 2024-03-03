@@ -22,6 +22,13 @@ function _stripPrefix(name: string, prefix: string | string[]) {
 }
 
 /**
+ * Replace empty string.
+ */
+function replaceEmpty(value: any) {
+  return value === '' ? undefined : value
+}
+
+/**
  * Convert string to lower camel case.
  *
  * @remarks
@@ -51,7 +58,7 @@ function _lowerCamelCase(name: string) {
  * @param obj object to traverse
  * @param fn function to apply
  */
-function morph(
+export function morph(
   obj: any,
   fn: (key: string, value: any) => { key: string; value: any }
 ) {
@@ -97,7 +104,7 @@ export function legacy(obj: any) {
   morph(obj, (key: string, value: any) => {
     key = _stripPrefix(key, 'praw_')
     key = _lowerFirstLetter(key)
-    if (value === '') value = undefined
+    value = replaceEmpty(undefined)
     return { key, value }
   })
 }
