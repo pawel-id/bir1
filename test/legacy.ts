@@ -8,7 +8,7 @@ t.test(
   async (t) => {
     const report = {
       regon: '011417295',
-      report: 'BIR11OsPrawna' as const,
+      report: 'BIR11OsPrawnaPkd' as const,
     }
 
     // Bir1 old version
