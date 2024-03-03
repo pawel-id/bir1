@@ -7,7 +7,7 @@ t.test(
   'new version with legacy normalize works the same as old one',
   async (t) => {
     const report = {
-      regon: '011417295',
+      regon: '010058960',
       report: 'BIR11OsPrawnaPkd' as const,
     }
 
