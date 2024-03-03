@@ -22,10 +22,13 @@ function stripPrefix(name: string, prefix: string | string[]) {
 }
 
 /**
- * Replace empty string.
+ * Replace some strings.
  */
-function replaceEmpty(value: any, replacer: any) {
-  return value === '' ? replacer : value
+function replace(value: any, replaceArray: [any, any][]) {
+  for (let [search, replace] of replaceArray) {
+    value = value.replace(search, replace)
+  }
+  return value
 }
 
 /**
@@ -104,7 +107,29 @@ export function legacy(obj: any) {
   morph(obj, (key: string, value: any) => {
     key = stripPrefix(key, 'praw_')
     key = lowerFirstLetter(key)
-    value = replaceEmpty(value, undefined)
+    value = replace(value, [['', undefined]])
+    return { key, value }
+  })
+}
+
+/**
+ * @param obj object to normalize
+ * @beta
+ */
+export function modern(obj: any) {
+  morph(obj, (key: string, value: any) => {
+    key = stripPrefix(key, [
+      'fiz_',
+      'praw_',
+      'fizC_',
+      'fizP_',
+      'lokfiz_',
+      'lokpraw_',
+      'wspolsc_',
+    ])
+    key = lowerCamelCase(key)
+    key = replace(key, [['regon9', 'regon']])
+    value = replace(value, [['', undefined]])
     return { key, value }
   })
 }
