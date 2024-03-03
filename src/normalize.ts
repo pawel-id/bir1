@@ -3,7 +3,7 @@ import assert from 'node:assert'
 /**
  * Lower first letter of the string.
  */
-function _lowerFirstLetter(name: string) {
+function lowerFirstLetter(name: string) {
   if (name.length === 0) return name
   return name[0].toLowerCase() + name.slice(1)
 }
@@ -11,7 +11,7 @@ function _lowerFirstLetter(name: string) {
 /**
  * Strip `prefix` from the `name` string.
  */
-function _stripPrefix(name: string, prefix: string | string[]) {
+function stripPrefix(name: string, prefix: string | string[]) {
   if (typeof prefix === 'string') prefix = [prefix]
   for (let p of prefix) {
     if (name.startsWith(p)) {
@@ -102,8 +102,8 @@ export function morph(
  */
 export function legacy(obj: any) {
   morph(obj, (key: string, value: any) => {
-    key = _stripPrefix(key, 'praw_')
-    key = _lowerFirstLetter(key)
+    key = stripPrefix(key, 'praw_')
+    key = lowerFirstLetter(key)
     value = replaceEmpty(undefined)
     return { key, value }
   })
