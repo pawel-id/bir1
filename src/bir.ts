@@ -61,10 +61,7 @@ export default class Bir {
   }
 
   private normalize(obj: any) {
-    if (this._normalizeFn) {
-      this._normalizeFn(obj)
-    }
-    return obj
+    return this._normalizeFn ? this._normalizeFn(obj) : obj
   }
 
   private async api(options: QueryOptions) {

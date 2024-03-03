@@ -24,9 +24,9 @@ function stripPrefix(name: string, prefix: string | string[]) {
 /**
  * Replace some strings.
  */
-function replace(value: any, replaceArray: [any, any][]) {
+function replace(value: string, replaceArray: [string, any][]) {
   for (let [search, replace] of replaceArray) {
-    value = value.replace(search, replace)
+    if (value === search) value = replace
   }
   return value
 }
@@ -64,28 +64,24 @@ function lowerCamelCase(name: string) {
 export function morph(
   obj: any,
   fn: (key: string, value: any) => { key: string; value: any }
-) {
-  if (typeof obj === 'object') {
+): any {
+  if (typeof obj === 'object' && obj !== null) {
     if (Array.isArray(obj)) {
-      for (const element of obj) {
-        morph(element, fn)
-      }
+      return obj.map((element: any) => morph(element, fn))
     } else {
+      let newObj: Record<string, any> = {}
       for (let [key, value] of Object.entries(obj)) {
         // technically this should never happen here, but let's be safe
         assert(typeof key === 'string', 'Only string keys are supported')
+
         if (typeof value === 'object') {
-          morph(value, fn)
+          newObj[key] = morph(value, fn)
         } else {
           const updated = fn(key, value)
-          if (updated.key !== key) {
-            delete obj[key]
-            obj[updated.key] = updated.value
-          } else if (updated.value !== value) {
-            obj[key] = updated.value
-          }
+          newObj[updated.key] = updated.value
         }
       }
+      return newObj
     }
   }
 }
@@ -104,7 +100,7 @@ export function morph(
  * @deprecated
  */
 export function legacy(obj: any) {
-  morph(obj, (key: string, value: any) => {
+  return morph(obj, (key: string, value: any) => {
     key = stripPrefix(key, 'praw_')
     key = lowerFirstLetter(key)
     value = replace(value, [['', undefined]])
@@ -117,7 +113,7 @@ export function legacy(obj: any) {
  * @beta
  */
 export function modern(obj: any) {
-  morph(obj, (key: string, value: any) => {
+  return morph(obj, (key: string, value: any) => {
     key = stripPrefix(key, [
       'fiz_',
       'praw_',
