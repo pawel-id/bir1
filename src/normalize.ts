@@ -81,7 +81,7 @@ function morph(
 }
 
 /**
- * Transforms object parsed from raw API response to format compatible with
+ * Transform object parsed from raw API response to format compatible with
  * earlier versions of the API. This function:
  *  - removes 'praw_' prefix from keys
  *  - lower first letter of keys
@@ -112,10 +112,10 @@ export function legacy(obj: any) {
 }
 
 /**
- * Transforms object parsed from raw API response to convenient format commonly
+ * Transform object parsed from raw API response to convenient format commonly
  * used in modern JavaScript applications. This is subjective and opinionated.
  * This function:
- * - remove prefixes from keys
+ * - remove prefixes from keys (e.g. `fiz_`, `praw_`, ...)
  * - lower camel case keys
  * - unifies some keys (e.g. `regon9` -> `regon`)
  * - replaces empty strings with `undefined`
