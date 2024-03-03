@@ -24,8 +24,8 @@ function stripPrefix(name: string, prefix: string | string[]) {
 /**
  * Replace empty string.
  */
-function replaceEmpty(value: any) {
-  return value === '' ? undefined : value
+function replaceEmpty(value: any, replacer?: any) {
+  return value === '' ? replacer : value
 }
 
 /**
@@ -104,7 +104,7 @@ export function legacy(obj: any) {
   morph(obj, (key: string, value: any) => {
     key = stripPrefix(key, 'praw_')
     key = lowerFirstLetter(key)
-    value = replaceEmpty(undefined)
+    value = replaceEmpty(value, undefined)
     return { key, value }
   })
 }
