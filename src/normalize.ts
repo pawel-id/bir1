@@ -37,7 +37,7 @@ function replaceEmpty(value: any) {
  * results different from proper implementation.
  * However it is stable and faster and sufficient for our use case.
  */
-function _lowerCamelCase(name: string) {
+function lowerCamelCase(name: string) {
   const words = name.split(/[^a-zA-Z0-9]/)
 
   const camelCaseWords = words.map((word, index) => {
