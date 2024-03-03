@@ -1,5 +1,3 @@
-import assert from 'node:assert'
-
 /**
  * Lower first letter of the string.
  */
@@ -70,9 +68,6 @@ function morph(
     } else {
       let newObj: Record<string, any> = {}
       for (let [key, value] of Object.entries(obj)) {
-        // technically this should never happen here, but let's be safe
-        assert(typeof key === 'string', 'Only string keys are supported')
-
         if (typeof value === 'object') {
           newObj[key] = morph(value, fn)
         } else {
