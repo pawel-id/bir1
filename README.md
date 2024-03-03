@@ -221,4 +221,4 @@ breaking changes were introduced:
 
    See further details in the source code of [legacy](src/normalize.ts)
    normalize function. This function can be used to preserve the old behavior as
-   shown in the [example](examples/legacy.js).
+   shown in the [example](examples/normalize.js).
