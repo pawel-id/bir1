@@ -1,3 +1,5 @@
+import assert from 'node:assert'
+
 /**
  * Lower first letter of the string.
  */
@@ -49,7 +51,7 @@ function _lowerCamelCase(name: string) {
  * @param obj object to traverse
  * @param fn function to apply
  */
-export function morph(
+function morph(
   obj: any,
   fn: (key: string, value: any) => { key: string; value: any }
 ) {
@@ -60,6 +62,8 @@ export function morph(
       }
     } else {
       for (let [key, value] of Object.entries(obj)) {
+        // technically this should never happen here, but let's be safe
+        assert(typeof key === 'string', 'Only string keys are supported')
         if (typeof value === 'object') {
           morph(value, fn)
         } else {
