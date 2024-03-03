@@ -47,7 +47,7 @@ function _lowerCamelCase(name: string) {
  * key-value pair. Functions can modify key and value or return the same. Object
  * is mutated in place.
  * @param obj object to traverse
- * @param fn functions to apply
+ * @param fn function to apply
  */
 export function morph(
   obj: any,
