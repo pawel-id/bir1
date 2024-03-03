@@ -42,72 +42,27 @@ function _lowerCamelCase(name: string) {
   return camelCaseWords.join('')
 }
 
-export function lowerCamelCaseKey() {
-  return (key: string, value: any) => {
-    const newKey = _lowerCamelCase(key)
-    if (newKey !== key) {
-      return { key: newKey, value }
-    }
-  }
-}
-
-export function replaceEmptyValue(replacer: any) {
-  return (key: string, value: any) => {
-    if (value === '') {
-      return { key, value: replacer }
-    }
-  }
-}
-
-export function lowerFirstLetterKey() {
-  return (key: string, value: any) => {
-    const newKey = _lowerFirstLetter(key)
-    if (newKey !== key) {
-      return { key: newKey, value }
-    }
-  }
-}
-
-export function stripPrefixKey(prefix: string | string[]) {
-  return (key: string, value: any) => {
-    const newKey = _stripPrefix(key, prefix)
-    if (newKey !== key) {
-      return { key: newKey, value }
-    }
-  }
-}
-
 /**
- * Traverse object recursively and apply provided functions `fns` to each
- * key-value pair. Functions can modify key and value or return undefined to
- * do nothing. Object is mutated in place.
+ * Traverse object recursively and apply provided function `fn` to each
+ * key-value pair. Functions can modify key and value or return the same. Object
+ * is mutated in place.
  * @param obj object to traverse
- * @param fns functions to apply
+ * @param fn functions to apply
  */
-export function traverse(
+export function morph(
   obj: any,
-  fns: ((key: string, value: any) => { key: string; value: any } | undefined)[]
+  fn: (key: string, value: any) => { key: string; value: any }
 ) {
   for (let [key, value] of Object.entries(obj)) {
     if (typeof value === 'object') {
-      traverse(value, fns)
+      morph(value, fn)
     } else {
-      let newKey = key,
-        newValue = value
-      for (let fn of fns) {
-        const updated = fn(newKey, newValue)
-        if (updated) {
-          newKey = updated.key
-          newValue = updated.value
-        }
-      }
-      if (newKey !== key) {
+      const updated = fn(key, value)
+      if (updated.key !== key) {
         delete obj[key]
-        obj[newKey] = newValue
+        obj[updated.key] = updated.value
       } else {
-        if (newValue !== value) {
-          obj[key] = newValue
-        }
+        obj[key] = updated.value
       }
     }
   }
@@ -127,9 +82,10 @@ export function traverse(
  * @deprecated
  */
 export function legacy(obj: any) {
-  traverse(obj, [
-    stripPrefixKey('praw_'),
-    lowerFirstLetterKey(),
-    replaceEmptyValue(undefined),
-  ])
+  morph(obj, (key: string, value: any) => {
+    key = _stripPrefix(key, 'praw_')
+    key = _lowerFirstLetter(key)
+    if (value === '') value = undefined
+    return { key, value }
+  })
 }
