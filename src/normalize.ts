@@ -97,8 +97,8 @@ export function morph(
  *  - replaces empty strings with `undefined`
  *
  * Note: GUS API returns more prefixed keys than 'praw_'. Removing only this
- * prefix was initial partial implementation. This approach is deprecated
- * and left only for compatibility with legacy code.
+ * prefix was initial partial implementation. This is incosistent approach and
+ * thus marker as deprecated, left only for compatibility with legacy code.
  *
  * @param obj object to normalize
  * @deprecated
