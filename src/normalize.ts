@@ -53,6 +53,28 @@ export function morph(
   obj: any,
   fn: (key: string, value: any) => { key: string; value: any }
 ) {
+  if (typeof obj !== 'object') {
+    if (Array.isArray(obj)) {
+      for (const element of obj) {
+        morph(element, fn)
+      }
+    } else {
+      for (let [key, value] of Object.entries(obj)) {
+        if (typeof value === 'object') {
+          morph(value, fn)
+        } else {
+          const updated = fn(key, value)
+          if (updated.key !== key) {
+            delete obj[key]
+            obj[updated.key] = updated.value
+          } else {
+            obj[key] = updated.value
+          }
+        }
+      }
+    }
+  }
+
   for (let [key, value] of Object.entries(obj)) {
     if (typeof value === 'object') {
       morph(value, fn)
