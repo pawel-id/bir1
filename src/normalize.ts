@@ -44,7 +44,7 @@ function _lowerCamelCase(name: string) {
 
 /**
  * Traverse object recursively and apply provided function `fn` to each
- * key-value pair. Functions can modify key and value or return the same. Object
+ * key-value pair. Function can modify key and value or return the same. Object
  * is mutated in place.
  * @param obj object to traverse
  * @param fn function to apply
