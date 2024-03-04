@@ -217,7 +217,7 @@ Take a look at the following example showing default behavior:
 import Bir from 'bir1'
 const bir = new Bir()
 console.log(
-  await birLegacy.report({
+  await bir.report({
     regon: '010058960',
     report: 'BIR11OsPrawna',
   })
@@ -242,7 +242,7 @@ import Bir from 'bir1'
 import { modern } from 'bir1/normalize'
 const bir = new Bir({ normalizeFn: modern })
 console.log(
-  await birLegacy.report({
+  await bir.report({
     regon: '010058960',
     report: 'BIR11OsPrawna',
   })
