@@ -206,6 +206,76 @@ parameters:
 
 Logout (method: Wyloguj)
 
+## Normalization
+
+By default this library returns data in the same format as it is returned in
+orginal SOAP messages.
+
+Take a look at the following example showing default behavior:
+
+```js
+import Bir from 'bir1'
+const bir = new Bir()
+console.log(
+  await birLegacy.report({
+    regon: '010058960',
+    report: 'BIR11OsPrawna',
+  })
+)
+// output:
+// {
+//   praw_regon9: '010058960',
+//   praw_nip: '5220002334',
+//   praw_statusNip: '',
+//   praw_nazwa: 'POLSKIE LINIE LOTNICZE "LOT" SPÓŁKA AKCYJNA',
+//   praw_nazwaSkrocona: '',
+//   ...
+// }
+```
+
+In above output keys have unnecessary prefix `praw_`. There is incosistent
+casing, etc... Then in order to make it cleaner it is possible to provide a
+function to normalize the response:
+
+```js
+import Bir from 'bir1'
+import { modern } from 'bir1/normalize'
+const bir = new Bir({ normalizeFn: modern })
+console.log(
+  await birLegacy.report({
+    regon: '010058960',
+    report: 'BIR11OsPrawna',
+  })
+)
+// output:
+// {
+//   regon: '010058960',
+//   nip: '5220002334',
+//   statusNip: undefined,
+//   nazwa: 'POLSKIE LINIE LOTNICZE "LOT" SPÓŁKA AKCYJNA',
+//   nazwaSkrocona: undefined,
+//   ...
+// }
+```
+
+Currently there are two normalization functions provided:
+
+- `legacy` - to preserve the old behavior. Don't use it unless want to provide
+  backward compatibility with previous versions of the library. It does the
+  following:
+  - removes 'praw\_' prefix from keys
+  - lower first letter of keys
+  - replaces empty strings with `undefined`
+- `modern` - to convert to modern format in consistent way. It does the
+  following:
+  - remove prefixes from keys (e.g. `fiz_`, `praw_`, ...)
+  - lower camel case keys
+  - unifies some keys (e.g. `regon9` -> `regon`)
+  - replaces empty strings with `undefined`
+
+Using above functions is completely optional. It is also possible to provide own
+function which takes JSON object and returns modified.
+
 ## Migrating from version 2.x to 3.x
 
 Please note that starting from version 3.0 of that library the following
