@@ -12,6 +12,7 @@
   "license": "MIT",
   "author": "Paweł Idczak <pawel.idczak@gmail.com>",
   "type": "module",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
