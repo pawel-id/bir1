@@ -1,4 +1,4 @@
-import got from 'got'
+import axios from 'axios'
 
 const url = {
   prod: 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
@@ -11,14 +11,12 @@ export type QueryOptions = {
 }
 
 export async function query(prod: boolean, options: QueryOptions) {
-  const { headers, ...rest } = options
-  // @ts-ignore
-  const { body } = await got.post(prod ? url.prod : url.test, {
+  const { headers, body } = options
+  const response = await axios.post(prod ? url.prod : url.test, body, {
     headers: {
       'Content-Type': 'application/soap+xml',
       ...headers,
     },
-    ...rest,
   })
-  return body
+  return response.data
 }

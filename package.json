@@ -34,9 +34,10 @@
     "pretty": "prettier --write src"
   },
   "dependencies": {
+    "assert": "^2.1.0",
+    "axios": "^1.7.9",
     "entities": "^4.5.0",
-    "fast-xml-parser": "^4.3.2",
-    "got": "^11.8.6"
+    "fast-xml-parser": "^4.3.2"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
