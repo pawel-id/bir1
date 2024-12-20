@@ -1,2 +1,2 @@
-import Bir from './bir.js'
+import Bir from './bir.ts'
 export default Bir

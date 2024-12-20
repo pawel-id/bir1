@@ -1,7 +1,7 @@
 import t from 'tap'
 import BirLegacy from 'bir1-legacy'
-import Bir from '../src/index.js'
-import { legacy } from '../src/normalize.js'
+import Bir from '../src/index.ts'
+import { legacy } from '../src/normalize.ts'
 
 t.test(
   'new version with legacy normalize works the same as old one',

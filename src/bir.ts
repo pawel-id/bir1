@@ -1,13 +1,13 @@
 import assert from 'assert'
-import * as template from './templates/index.js'
-import { unsoap, parse } from './extract.js'
-import { query, QueryOptions } from './client.js'
-import { BirError } from './error.js'
+import * as template from './templates/index.ts'
+import { unsoap, parse } from './extract.ts'
+import { query, QueryOptions } from './client.ts'
+import { BirError } from './error.ts'
 import {
   GetValueOptions,
   DanePobierzPelnyRaportOptions,
   DanePobierzRaportZbiorczyOptions,
-} from './types.js'
+} from './types.ts'
 
 /**
  * Class Bir provides access to REGON API

@@ -3,17 +3,18 @@
 
   "compilerOptions": {
     "lib": ["es2021"],
-    "module": "node16",
+    "module": "esnext",
     "target": "es2021",
 
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node16",
+    "moduleResolution": "bundler",
 
     // project specific below
     "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
     "declaration": true,
     "outDir": "dist"
   },

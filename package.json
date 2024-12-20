@@ -12,14 +12,20 @@
   "license": "MIT",
   "author": "Paweł Idczak <pawel.idczak@gmail.com>",
   "type": "module",
+  "module": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./normalize": {
       "types": "./dist/normalize.d.ts",
+      "require": "./dist/normalize.cjs",
+      "import": "./dist/normalize.js",
       "default": "./dist/normalize.js"
     }
   },
@@ -28,10 +34,21 @@
   ],
   "scripts": {
     "docs": "rimraf docs && typedoc",
-    "build": "rimraf dist && tsc",
-    "dev": "tsc -w",
+    "build": "rimraf dist && tsup",
+    "dev": "tsup --watch",
     "test": "tap",
     "pretty": "prettier --write src"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts",
+      "src/normalize.ts"
+    ],
+    "dts": true,
+    "format": [
+      "cjs",
+      "esm"
+    ]
   },
   "dependencies": {
     "entities": "^4.5.0",
@@ -47,6 +64,7 @@
     "rimraf": "^5.0.5",
     "tap": "^18.7.0",
     "ts-node": "^10.9.2",
+    "tsup": "^8.3.5",
     "typedoc": "^0.25.6",
     "typedoc-plugin-markdown": "^3.17.1",
     "typedoc-plugin-missing-exports": "^2.1.0",
