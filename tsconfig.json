@@ -1,10 +1,10 @@
 {
-  // based on https://github.com/tsconfig/bases/blob/main/bases/node16.json
+  // based on https://github.com/tsconfig/bases/blob/main/bases/node18.json
 
   "compilerOptions": {
-    "lib": ["es2021"],
+    "lib": ["es2023"],
     "module": "node16",
-    "target": "es2021",
+    "target": "es2022",
 
     "strict": true,
     "esModuleInterop": true,
@@ -13,7 +13,6 @@
     "moduleResolution": "node16",
 
     // project specific below
-    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "outDir": "dist"
   },
