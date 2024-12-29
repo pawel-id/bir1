@@ -1,5 +1,3 @@
-import got from 'got'
-
 const url = {
   prod: 'https://wyszukiwarkaregon.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
   test: 'https://wyszukiwarkaregontest.stat.gov.pl/wsBIR/UslugaBIRzewnPubl.svc',
@@ -11,14 +9,20 @@ export type QueryOptions = {
 }
 
 export async function query(prod: boolean, options: QueryOptions) {
-  const { headers, ...rest } = options
-  // @ts-ignore
-  const { body } = await got.post(prod ? url.prod : url.test, {
+  const { headers, body } = options
+  const response = await fetch(prod ? url.prod : url.test, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/soap+xml',
       ...headers,
     },
-    ...rest,
+    body,
   })
-  return body
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+
+  const responseBody = await response.text()
+  return responseBody
 }
