@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "entities": "^6.0.0",
-    "fast-xml-parser": "^4.3.2"
+    "fast-xml-parser": "^4.5.1"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
