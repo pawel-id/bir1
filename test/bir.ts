@@ -1,5 +1,5 @@
 import t from 'tap'
-import Bir from '../src/index.js'
+import Bir, { BirError } from '../src/index.js'
 
 t.test('search by REGON for example company', async (t) => {
   const bir = new Bir()
@@ -26,9 +26,13 @@ t.test('search fail for non existing company', async (t) => {
   const bir = new Bir()
   const searchNotExisting = async () =>
     await bir.search({ regon: 'notExisting' })
-  await t.rejects(searchNotExisting, {
-    message: 'No data found for the specified search criteria',
-  })
+  try {
+    await searchNotExisting()
+    t.fail('Should throw error when searching for a non-existing company')
+  } catch (err) {
+    t.match(err, { message: 'No data found for the specified search criteria' })
+    t.ok(err instanceof BirError, 'Error should be an instance of Error')
+  }
   t.end()
 })
 
