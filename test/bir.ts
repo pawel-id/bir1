@@ -45,3 +45,24 @@ t.test('report existing company', async (t) => {
   t.match(result, { praw_nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA' })
   t.end()
 })
+
+t.test('report existing company with BIR12', async (t) => {
+  const bir = new Bir()
+  const result = await bir.report({
+    regon: '011417295',
+    report: 'BIR12OsPrawna',
+  })
+  t.match(result, { praw_nazwa: 'T-MOBILE POLSKA SPÓŁKA AKCYJNA' })
+  t.end()
+})
+
+t.test('BIR12 PKD report includes pkdWersja field', async (t) => {
+  const bir = new Bir()
+  const result = await bir.report({
+    regon: '011417295',
+    report: 'BIR12OsPrawnaPkd',
+  })
+  const entry = Array.isArray(result) ? result[0] : result
+  t.ok(entry.praw_pkdWersja !== undefined, 'pkdWersja field should be present')
+  t.end()
+})

@@ -4,8 +4,9 @@ Simple node.js client library to provide information about authorized government
 administration authorities, regional authorities, government institutions and to
 commercial entities. It connects to
 [REGON service](https://api.stat.gov.pl/Home/RegonApi?lang=en) and returns data
-in JSON format. Data returned from original SOAP messages are parsed to JSON. By
-default the following rules apply:
+in JSON format. Supports both BIR 1.1 and BIR 1.2 API versions, including
+PKD 2025 classification. Data returned from original SOAP messages are parsed to
+JSON. By default the following rules apply:
 
 - the structure of the original SOAP messages are preserved (see original
   messages in
@@ -169,6 +170,23 @@ parameters:
   - `BIR11JednLokalnaOsPrawnejPkd`
   - `BIR11OsPrawnaSpCywilnaWspolnicy`
   - `BIR11TypPodmiotu`
+  - `BIR12OsFizycznaDaneOgolne`
+  - `BIR12OsFizycznaDzialalnoscCeidg`
+  - `BIR12OsFizycznaDzialalnoscRolnicza`
+  - `BIR12OsFizycznaDzialalnoscPozostala`
+  - `BIR12OsFizycznaDzialalnoscSkreslonaDo20141108`
+  - `BIR12OsFizycznaPkd`
+  - `BIR12OsFizycznaListaJednLokalnych`
+  - `BIR12JednLokalnaOsFizycznej`
+  - `BIR12JednLokalnaOsFizycznejPkd`
+  - `BIR12OsPrawna`
+  - `BIR12OsPrawnaPkd`
+  - `BIR12OsPrawnaListaJednLokalnych`
+  - `BIR12JednLokalnaOsPrawnej`
+  - `BIR12JednLokalnaOsPrawnejPkd`
+  - `BIR12OsPrawnaSpCywilnaWspolnicy`
+  - `BIR12TypPodmiotu`
+  - `BIR121JednLokalnaOsPrawnej`
 
 example:
 
@@ -199,6 +217,12 @@ parameters:
   - `BIR11NoweJednostkiLokalne`
   - `BIR11AktualizowaneJednostkiLokalne`
   - `BIR11SkresloneJednostkiLokalne`
+  - `BIR12NowePodmiotyPrawneOrazDzialalnosciOsFizycznych`
+  - `BIR12AktualizowanePodmiotyPrawneOrazDzialalnosciOsFizycznych`
+  - `BIR12SkreslonePodmiotyPrawneOrazDzialalnosciOsFizycznych`
+  - `BIR12NoweJednostkiLokalne`
+  - `BIR12AktualizowaneJednostkiLokalne`
+  - `BIR12SkresloneJednostkiLokalne`
 
 ---
 
@@ -292,3 +316,24 @@ breaking changes were introduced:
    See further details in the source code of [legacy](src/normalize.ts)
    normalize function. This function can be used to preserve the old behavior as
    shown in the [example](examples/normalize.js).
+
+## Migrating from version 4.x to 5.x
+
+Version 5.0 adds support for BIR 1.2 API which introduces PKD 2025
+classification. The following changes were made:
+
+1. New `BIR12*` report types are now available alongside existing `BIR11*`
+   reports. All BIR11 reports continue to work unchanged.
+
+2. BIR12 PKD reports (`BIR12OsFizycznaPkd`, `BIR12OsPrawnaPkd`,
+   `BIR12JednLokalnaOsFizycznejPkd`, `BIR12JednLokalnaOsPrawnejPkd`) include a
+   new `*_pkdWersja` field indicating PKD version (`"2007"` or `"2025"`).
+
+3. BIR12 PKD reports for physical persons and local units use slightly different
+   field names (e.g. `fiz_pkdKod` instead of `fiz_pkd_Kod`). The `modern`
+   normalization function produces identical output for both formats.
+
+4. New report variant `BIR121JednLokalnaOsPrawnej` provides legal entity local
+   unit data with additional `lokpraw_nip` and `lokpraw_statusNip` fields.
+
+5. New `BIR12*` summary report types are available for `DanePobierzRaportZbiorczy`.
