@@ -1,5 +1,9 @@
 import t from 'tap'
 import Bir, { BirError } from '../src/index.js'
+import {
+  DanePobierzPelnyRaportNames,
+  DanePobierzRaportZbiorczyNames,
+} from '../src/types.js'
 
 t.test('search by REGON for example company', async (t) => {
   const bir = new Bir()
@@ -66,3 +70,55 @@ t.test('BIR12 PKD report includes pkdWersja field', async (t) => {
   t.ok(entry.praw_pkdWersja !== undefined, 'pkdWersja field should be present')
   t.end()
 })
+
+t.test('all DanePobierzPelnyRaport types are valid report names', async (t) => {
+  const reports = DanePobierzPelnyRaportNames
+  const bir = new Bir()
+  await bir.login()
+  // T-Mobile Polska S.A. — legal entity (Typ: P), same as other tests in this file
+  const REGON_PRAWNA = '011417295'
+  // Physical person entity (Typ: F) from the GUS test database. Randomly selected.
+  const REGON_FIZYCZNA = '771504670'
+  // These BIR11 reports return ErrorCode '5' on the Bir1 regardless of REGON
+  // type, but return ErrorCode '4' (valid name, no data) on production.
+  const testDbFalsePositives = new Set([
+    'BIR11JednLokalnaOsFizycznejPkd',
+    'BIR11JednLokalnaOsPrawnejPkd',
+  ])
+  for (const report of reports) {
+    if (testDbFalsePositives.has(report)) continue
+    const isFiz = /OsFizyczn|JednLokalnaOsFizycznej/.test(report)
+    const regon = isFiz ? REGON_FIZYCZNA : REGON_PRAWNA
+    try {
+      await bir.report({ regon, report: report as any })
+    } catch (err: any) {
+      t.not(
+        err?.response?.ErrorCode,
+        '5',
+        `${report} should be a valid report name`
+      )
+    }
+  }
+  t.end()
+})
+
+t.test(
+  'all DanePobierzRaportZbiorczy types are valid report names',
+  async (t) => {
+    const reports = DanePobierzRaportZbiorczyNames
+    const bir = new Bir()
+    await bir.login()
+    const date = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 10)
+    for (const report of reports) {
+      try {
+        await bir.summary({ date, report: report as any })
+      } catch (err: any) {
+        const code = err?.response?.ErrorCode
+        t.not(code, '105', `${report} should be a valid report name`)
+      }
+    }
+    t.end()
+  }
+)
