@@ -90,12 +90,6 @@ export const DanePobierzRaportZbiorczyNames = [
   'BIR11NoweJednostkiLokalne',
   'BIR11AktualizowaneJednostkiLokalne',
   'BIR11SkresloneJednostkiLokalne',
-  'BIR12NowePodmiotyPrawneOrazDzialalnosciOsFizycznych',
-  'BIR12AktualizowanePodmiotyPrawneOrazDzialalnosciOsFizycznych',
-  'BIR12SkreslonePodmiotyPrawneOrazDzialalnosciOsFizycznych',
-  'BIR12NoweJednostkiLokalne',
-  'BIR12AktualizowaneJednostkiLokalne',
-  'BIR12SkresloneJednostkiLokalne',
 ] as const
 
 export type DanePobierzRaportZbiorczyOptions =
